@@ -12,7 +12,7 @@ app.use(router)
 
 
 // Middleware de tratamento de erros: retorna 400 para erros conhecidos e 500 para falhas internas inesperadas
-app.use((err: Error, req: Request, res: Response, next: NextFunction)=>{
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     if (err instanceof Error){
         return res.status(400).json({
             error:err.message

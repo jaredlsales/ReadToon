@@ -9,6 +9,18 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model Cadastro {
+  id String @id @default(uuid())
+  nome String
+  email String
+  senha String
+
+  data_criacao DateTime @default(now())
+  data_alteracao DateTime @updatedAt
+
+  @@map("cadastro")
 }
