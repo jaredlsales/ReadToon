@@ -22,5 +22,54 @@ model Cadastro {
   data_criacao DateTime @default(now())
   data_alteracao DateTime @updatedAt
 
+  usuario Usuario []
+
   @@map("cadastro")
+}
+
+model Usuario {
+  id String @id @default(uuid())
+  nome String
+  email String
+  senha String
+
+  data_criacao DateTime @default(now())
+  data_alteracao DateTime @updatedAt
+
+  cadastro Cadastro @relation(fields: [idCadastro],references: [id])
+  idCadastro String
+
+  @@map("usuario")
+}
+
+model Manhuwa {
+  id String @id @default(uuid())
+  titulo String
+  autor String
+  descricao String
+  capa_url String
+
+  data_criacao DateTime @default(now())
+  data_alteracao DateTime @updatedAt
+
+  capitulo Capitulo []
+
+  @@map("manhuwa")
+
+}
+
+model Capitulo {
+  id String @id @default(uuid())
+  numero String
+  titulo String
+  arquivo_url String
+
+  data_criacao DateTime @default(now())
+  data_alteracao DateTime @updatedAt
+
+  manhuwa Manhuwa @relation(fields: [idManhuwa],references: [id])
+  idManhuwa String
+
+  @@map("capitulo")
+
 }
