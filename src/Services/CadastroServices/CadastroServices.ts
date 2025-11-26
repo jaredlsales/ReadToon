@@ -19,6 +19,19 @@ class CadastroServices {
         return ({dados:"Cadastro Efetuado com sucesso"})
 
     }
+
+    async visualizarCadastro (){
+        const resposta = await prismaClient.cadastro.findMany({
+            select:{
+                id: true,
+                nome: true,
+                email: true,
+            }
+        })
+
+        return resposta
+        
+    }
 }
 
 export {CadastroServices}

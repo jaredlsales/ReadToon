@@ -14,6 +14,12 @@ class CadastroControllers {
         return res.json(resposta)
         
     }
+
+    async visualizarCadsatro (req:Request, res:Response){
+        const enviarDados = new CadastroServices()
+        const resposta =  await enviarDados.visualizarCadastro()
+        return res.json(resposta)
+    }
 }
 
 

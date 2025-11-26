@@ -21,6 +21,19 @@ class ManhuwaServices {
 
         return ({dados:"Cadastro Efetuado com sucesso"})
     }
+
+    async visualizarManhuwa (){
+        const resposta = await prismaClient.manhuwa.findMany({
+            select:{
+                id: true,
+                titulo: true,
+                autor: true,
+                descricao: true,
+                capa_url: true
+            }
+        })
+        return resposta
+    }
 }
 
 

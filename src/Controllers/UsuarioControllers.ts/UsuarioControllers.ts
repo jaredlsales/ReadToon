@@ -15,6 +15,12 @@ class UsuarioControllers {
         return res.json(resposta)
         
     }
+
+    async visualizarUsuario (req:Request, res:Response){
+        const enviarDados = new UsuarioServices()
+        const resposta =  await enviarDados.visualizarUsuario()
+        return res.json(resposta)
+    }
 }
 
 

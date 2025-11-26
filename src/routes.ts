@@ -12,5 +12,11 @@ router.post("/UsuarioControllers", new UsuarioControllers().usuarioControllers)
 router.post("/ManhuwaControllers", new ManhuwaControllers().manhuwaControllers)
 router.post("/CapituloControllers", new CapituloControllers().capituloControllers)
 
+//Metodo GET
+router.get("/VisualizarCadastro", new CadastroControllers().visualizarCadsatro)
+router.get("/VisualizarCapitulo", new CapituloControllers().visualizarCapituo)
+router.get("/VisualizarManhuwa", new ManhuwaControllers().visualizarManhuwa)
+router.get("/VisualizarUsuario", new UsuarioControllers().visualizarUsuario)
+
 
 export default router

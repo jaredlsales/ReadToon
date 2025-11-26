@@ -14,6 +14,12 @@ class ManhuwaControllers {
 
         return res.json(resposta)
     }
+
+    async visualizarManhuwa (req:Request, res:Response){
+        const enviarDados = new ManhuwaServices()
+        const resposta = await enviarDados.visualizarManhuwa()
+        return res.json(resposta)
+    }
 }
 
 

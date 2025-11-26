@@ -20,6 +20,21 @@ class CapituloServices {
 
         return ({dados:"Cadastro Efetuado com sucesso"})
     }
+
+    async visualizarCapitulo (){
+        const resposta =  await prismaClient.capitulo.findMany({
+            select:{
+                id: true,
+                numero: true,
+                titulo: true,
+                arquivo_url: true,
+                data_alteracao: true
+            }
+        })
+
+        return resposta
+        
+    }
 }
 
 
