@@ -16,7 +16,7 @@ datasource db {
 model Cadastro {
   id String @id @default(uuid())
   nome String
-  email String
+  email String 
   senha String
 
   data_criacao DateTime @default(now())
@@ -29,8 +29,8 @@ model Cadastro {
 
 model Usuario {
   id String @id @default(uuid())
-  nome String
-  email String
+  nome String 
+  email String 
   senha String
 
   data_criacao DateTime @default(now())
