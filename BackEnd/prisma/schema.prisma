@@ -10,66 +10,66 @@ generator client {
 
 datasource db {
   provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 model Usuario {
-  id String @id @default(uuid())
-  nome String
+  id    String @id @default(uuid())
+  nome  String
   email String
   senha String
 
   // Relacionamento: Um usuário TEM um perfil
   perfil Perfil?
 
-
-  data_criacao DateTime @default(now()) 
+  data_criacao   DateTime @default(now())
   data_alteracao DateTime @updatedAt
 
   @@map("usuario")
 }
 
 model Perfil {
-  id String @id @default(uuid())
-  foto_url String
+  id           String @id @default(uuid())
+  foto_url     String
   preferencias String
 
   // Chave Estrangeira para o Usuário
-  usuario Usuario @relation(fields: [idUsuario], references: [id])
-  idUsuario String @unique // @unique garante que seja 1:1
+  usuario   Usuario @relation(fields: [idUsuario], references: [id])
+  idUsuario String  @unique // @unique garante que seja 1:1
 
-  data_criacao DateTime @default(now()) 
+  data_criacao   DateTime @default(now())
   data_alteracao DateTime @updatedAt
 
   @@map("perfil")
 }
 
 model Manhwa {
-  id String @id @default(uuid())
-  titulo String
+  id        String @id @default(uuid())
+  titulo    String
   descricao String
-  autor String
-  genero String
-  capa_url String
+  autor     String
+  genero    String
+  capa_url  String
 
   // Relacionamento : 1:N
   capitulo Capitulo[]
 
-  data_criacao DateTime @default(now()) 
+  data_criacao   DateTime @default(now())
   data_alteracao DateTime @updatedAt
 
   @@map("manhwa")
 }
 
 model Capitulo {
-  id String @id @default(uuid())
-  numero Int
+  id             String @id @default(uuid())
+  numero         Int
   capitulo_url_1 String
 
   // Chave Estrangeira para o Usuário
-  manhwa Manhwa @relation(fields: [idManhwa], references: [id])
+  manhwa   Manhwa @relation(fields: [idManhwa], references: [id])
   idManhwa String
 
-  data_criacao DateTime @default(now()) 
+  data_criacao   DateTime @default(now())
   data_alteracao DateTime @updatedAt
 
   @@map("capitulo")
