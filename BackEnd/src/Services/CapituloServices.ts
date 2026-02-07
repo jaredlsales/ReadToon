@@ -14,6 +14,10 @@ interface AlterarCapitulos {
     idManhwa: string
 }
 
+interface DeletarCapitulos {
+    id: string
+}
+
 class CapituloServices {
     async CadastrarCapitulos({numero,capitulo_url_1,idManhwa}: Capitulos){
         await prismaClient.capitulo.create({
@@ -54,6 +58,16 @@ class CapituloServices {
         })
 
         return ({dados:"Capitulo Atualizado com Sucesso!"})
+    }
+
+    async DeletarCapitulos({id}: DeletarCapitulos){
+        await prismaClient.capitulo.delete({
+            where:{
+                id:id
+            }
+        })
+
+        return ({dados:"Capitulo Deletado com Sucesso!"})
     }
 }
 

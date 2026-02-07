@@ -33,6 +33,16 @@ class CapituloControllers {
         return res.json(resposta)
     }
 
+    async DeletarCapitulos(req:Request, res:Response){
+        const {id} = req.params
+        const enviarDados =  new CapituloServices()
+        const resposta = await enviarDados.DeletarCapitulos({
+            id
+        })
+
+        return res.json(resposta)
+    }
+
     
 
 }
