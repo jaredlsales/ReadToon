@@ -22,6 +22,29 @@ class ManhwaServices {
 
         return ({dados:"Manhwa Cadastrado com Sucesso"})
     }
+
+    async VisualizarManhwa(){
+        const resposta =  await prismaClient.manhwa.findMany({
+            select:{
+                id:true,
+                capa_url:true,
+                titulo:true,
+                genero:true,
+                autor:true,
+                descricao:true,
+                data_criacao:true,
+                data_alteracao:true,
+                // Acessando a relação de capítulos:
+                capitulo:{
+                    select:{
+                        numero:true
+                    }
+                }
+            }
+        })
+
+        return resposta
+    }
 }
 
 export {ManhwaServices}

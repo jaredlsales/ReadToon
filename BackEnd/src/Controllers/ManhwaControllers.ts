@@ -15,6 +15,12 @@ class ManhwaControllers {
 
         return res.json(resposta)
     }
+
+    async VisualizarManhwa(req:Request, res:Response){
+        const enviarDados =  new ManhwaServices()
+        const resposta =  await enviarDados.VisualizarManhwa()
+        return res.json(resposta)
+    }
 }
 
 export {ManhwaControllers}
