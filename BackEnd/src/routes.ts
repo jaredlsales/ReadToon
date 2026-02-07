@@ -17,6 +17,7 @@ routes.post("/CadastrarCapitulos", new CapituloControllers().CadastrarCapitulos)
 routes.get("/VisualizarUsuario", new UsuarioControllers().VisualizarUsuario)
 routes.get("/VisualizarPerfil", new PerfilControllers().VisualizarPerfil)
 routes.get("/VisualizarManhwa", new ManhwaControllers().VisualizarManhwa)
+routes.get("/VisualizarCapitulos", new CapituloControllers().VisualizarCapitulos)
 
 
 export default routes

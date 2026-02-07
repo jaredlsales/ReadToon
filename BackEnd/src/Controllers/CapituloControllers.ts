@@ -13,6 +13,13 @@ class CapituloControllers {
         
         return res.json(resposta)
     }
+
+    async VisualizarCapitulos(req:Request, res:Response){
+        const enviarDados =  new CapituloServices()
+        const resposta = await enviarDados.VisualizarCapitulos()
+        return res.json(resposta)
+    }
+
 }
 
 export {CapituloControllers}

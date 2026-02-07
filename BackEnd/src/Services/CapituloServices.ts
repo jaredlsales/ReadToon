@@ -19,6 +19,20 @@ class CapituloServices {
 
         return ({dados:"Capitulo Cadastrado com Sucesso"})
     }
+
+    async VisualizarCapitulos(){
+        const resposta =  await prismaClient.capitulo.findMany({
+            select:{
+                id:true,
+                idManhwa:true,
+                capitulo_url_1:true,
+                numero:true,
+
+            }
+        })
+
+        return resposta
+    }
 }
 
 export {CapituloServices}
