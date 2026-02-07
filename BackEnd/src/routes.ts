@@ -15,6 +15,7 @@ routes.post("/CadastrarCapitulos", new CapituloControllers().CadastrarCapitulos)
 
 //Metodo GET
 routes.get("/VisualizarUsuario", new UsuarioControllers().VisualizarUsuario)
+routes.get("/VisualizarPerfil", new PerfilControllers().VisualizarPerfil)
 
 
 export default routes

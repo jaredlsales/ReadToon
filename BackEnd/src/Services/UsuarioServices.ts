@@ -27,7 +27,7 @@ class UsuarioServices {
                 id:true,
                 nome:true,
                 email:true,
-                senha:true,
+                senha:true
             }
         })
         return resposta

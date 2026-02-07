@@ -19,6 +19,8 @@ class UsuarioControllers {
         const resposta =  await enviarDados.visualizarUsuario()
         return res.json(resposta)
     }
+
+    
 }
 
 export {UsuarioControllers}

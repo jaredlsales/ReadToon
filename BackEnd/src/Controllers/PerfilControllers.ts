@@ -13,6 +13,12 @@ class PerfilControllers {
 
         return res.json(resposta)
     }
+
+    async VisualizarPerfil(req:Request, res:Response){
+        const enviarDados = new PerfilServices()
+        const resposta = await enviarDados.VisualizarPerfil()
+        return res.json(resposta)
+    }
 }
 
 

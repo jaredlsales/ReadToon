@@ -18,6 +18,23 @@ class PerfilServices {
 
         return ({dados:"Perfil Atualizado com sucesso"})
     }
+
+
+    async VisualizarPerfil(){
+        const resposta = await prismaClient.perfil.findMany({
+            select:{
+                id: true,
+                idUsuario:true,
+                foto_url:true,
+                preferencias: true,
+                data_criacao: true
+            }
+
+        })
+
+        return resposta
+        
+    }
 }
 
 export {PerfilServices}
