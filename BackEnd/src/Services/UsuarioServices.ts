@@ -1,4 +1,5 @@
 import prismaClient from "../Prisma/PrismaClient";
+import {hash} from "bcryptjs"
 
 interface CadastrarUsuario {
     nome: string,
@@ -24,12 +25,35 @@ interface DeletarUsuario {
 
 class UsuarioServices {
     async cadastrarUsuario({nome,email,senha}: CadastrarUsuario){
+        //emailExiste = faz uma consunta no bando de dados se já existe na base de dados
+        //OR = Não dizer qual está cadastrado e uma boa pratica
+        const emailExiste = await prismaClient.usuario.findFirst({
+            where:{
+                OR:[
+                    {
+                        email:email
+                    },
+                    {
+                        senha:senha
+                    }
+                ]
+            }
+        })
+
+        if(emailExiste){
+            throw new Error("Email ou Senha já está cadastrado")
+        }
+
+        //senhaCrypte =  Seria a Cryptografia do senha com uma hash
+        // 8 - 10 é um numero padrão, pela quantiade de vezes que ele vai criptgrofar
+        const senhaCrypte = await hash(senha,10)
+
         await prismaClient.usuario.create({
 
             data:{
                 nome:nome,
                 email:email,
-                senha:senha
+                senha:senhaCrypte
             }
         })
 
