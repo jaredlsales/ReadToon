@@ -23,6 +23,7 @@ routes.get("/VisualizarCapitulos", new CapituloControllers().VisualizarCapitulos
 routes.put("/AlterarUsuario", new UsuarioControllers().AlterarUsuario)
 routes.put("/AlterarPerfil", new PerfilControllers().AlterarPerfil)
 routes.put("/AlterarManhwa", new ManhwaControllers().AlterarManhwa)
+routes.put("/AlterarCapitulos", new CapituloControllers().AlterarCapitulos)
 
 
 

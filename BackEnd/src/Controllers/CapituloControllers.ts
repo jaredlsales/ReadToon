@@ -20,6 +20,21 @@ class CapituloControllers {
         return res.json(resposta)
     }
 
+    async AlterarCapitulos(req:Request, res:Response){
+        const {id,idManhwa, numero, capitulo_url_1} = req.body
+        const enviarDados =  new CapituloServices()
+        const resposta =  await enviarDados.AlterarCapitulos({
+            id,
+            idManhwa,
+            capitulo_url_1,
+            numero
+        })
+
+        return res.json(resposta)
+    }
+
+    
+
 }
 
 export {CapituloControllers}
