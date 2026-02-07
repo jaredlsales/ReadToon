@@ -28,6 +28,7 @@ routes.put("/AlterarCapitulos", new CapituloControllers().AlterarCapitulos)
 //Metodo DELETE
 routes.delete("/DeletarUsuario/:id", new UsuarioControllers().DeletarUsuario)
 routes.delete("/DeletarPerfil/:id", new PerfilControllers().DeletarPerfil)
+routes.delete("/DeletarManhwa/:id", new ManhwaControllers().DeletarManhwa)
 
 
 

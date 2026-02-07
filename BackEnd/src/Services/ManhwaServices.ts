@@ -17,6 +17,10 @@ interface AlterarManhwa {
     capa_url: string
 }
 
+interface DeletarManhwa {
+    id: string
+}
+
 class ManhwaServices {
     async CadastrarManhwa({titulo,descricao,autor,genero,capa_url}: Manhwa){
         await prismaClient.manhwa.create({
@@ -70,6 +74,16 @@ class ManhwaServices {
         })
 
         return ({dados:"Manhwa Atualizado com Sucesso!"})
+    }
+
+    async DeletarManhwa({id}: DeletarManhwa){
+        await prismaClient.manhwa.delete({
+            where:{
+                id:id
+            }
+        })
+
+        return ({dados:"Manhwa Deletado com Sucesso!"})
     }
 }
 

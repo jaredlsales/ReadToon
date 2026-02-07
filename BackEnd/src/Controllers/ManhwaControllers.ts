@@ -36,6 +36,16 @@ class ManhwaControllers {
 
         return res.json(respota)
     }
+
+    async DeletarManhwa(req:Request, res:Response){
+        const {id} = req.params
+        const enviarDados =  new ManhwaServices()
+        const resposta =  await enviarDados.DeletarManhwa({
+            id
+        })
+
+        return res.json(resposta)
+    }
 }
 
 export {ManhwaControllers}
