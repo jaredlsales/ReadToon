@@ -1,11 +1,17 @@
+import { warnEnvConflicts } from "@prisma/client/runtime/library";
 import prismaClient from "../Prisma/PrismaClient";
-import {hash} from "bcryptjs"
+import {compare, hash} from "bcryptjs"
 
 interface CadastrarUsuario {
     nome: string,
     email: string,
     senha: string
 
+}
+
+interface LoginUsuario {
+    email: string,
+    senha: string
 }
 
 interface AtualizarrUsuario {
@@ -58,6 +64,28 @@ class UsuarioServices {
         })
 
         return ({dados:"Cadastro Efetuado com Sucesso"})
+    }
+
+    async LoginUsuario({email,senha}: LoginUsuario){
+        const emailExiste = await prismaClient.usuario.findFirst({
+            where:{
+                email:email
+            }
+        })
+
+        if(!emailExiste){
+            throw new Error ("Login Incorreto")
+        }
+
+        const senhaCrypte = await compare(senha,emailExiste.senha)
+        //console.log(senhaCrypte)
+
+        if(senhaCrypte){
+            return ({dados:"Login Efetuado com Sucesso!"})
+        }else {
+            throw new Error ("Email ou Senha Incorreto")
+        }
+            
     }
 
     async visualizarUsuario(){

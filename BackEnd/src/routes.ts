@@ -13,6 +13,9 @@ routes.post("/AtualizarPerfil", new PerfilControllers().AtualizarPerfil)
 routes.post("/CadastrarManhwa",new ManhwaControllers().CadastrarManhwa)
 routes.post("/CadastrarCapitulos", new CapituloControllers().CadastrarCapitulos)
 
+//Metodo POST Login
+routes.post("/LoginUsuario", new UsuarioControllers().LoginUsuario)
+
 //Metodo GET
 routes.get("/VisualizarUsuario", new UsuarioControllers().VisualizarUsuario)
 routes.get("/VisualizarPerfil", new PerfilControllers().VisualizarPerfil)

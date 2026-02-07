@@ -14,6 +14,17 @@ class UsuarioControllers {
         return res.json(resposta)
     }
 
+    async LoginUsuario(req:Request, res:Response){
+        const {email, senha} = req.body
+        const enviarDados =  new UsuarioServices()
+        const resposta =  await enviarDados.LoginUsuario({
+            email,
+            senha
+        })
+
+        return res.json(resposta)
+    }
+
     async VisualizarUsuario(req:Request, res:Response){
         const enviarDados =  new UsuarioServices()
         const resposta =  await enviarDados.visualizarUsuario()
