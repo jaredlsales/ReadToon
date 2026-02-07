@@ -13,6 +13,10 @@ interface AlterarPerfil {
     idUsuario: string
 }
 
+interface DeletarPerfil {
+    id: string
+}
+
 
 class PerfilServices {
     async AtualizarPerfil({foto_url,preferencias,idUsuario}: Perfil){
@@ -58,6 +62,16 @@ class PerfilServices {
         })
 
         return ({dados:"Perfil Alterado com Sucesso"})
+    }
+
+    async DeletarPerfil({id}: DeletarPerfil){
+        await prismaClient.perfil.delete({
+            where:{
+                id:id
+            }
+        })
+
+        return ({dados:"Perfil Deletado com Sucesso"})
     }
 }
 

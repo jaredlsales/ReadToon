@@ -32,6 +32,16 @@ class PerfilControllers {
 
         return res.json(resposta)
     }
+
+    async DeletarPerfil(req:Request, res:Response){
+        const {id} = req.params
+        const enviarDados = new PerfilServices()
+        const resposta = await enviarDados.DeletarPerfil({
+            id
+        })
+
+        return res.json(resposta)
+    }
 }
 
 
