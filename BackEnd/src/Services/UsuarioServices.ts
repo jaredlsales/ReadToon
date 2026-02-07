@@ -7,6 +7,17 @@ interface CadastrarUsuario {
 
 }
 
+interface AtualizarrUsuario {
+    id: string,
+    nome: string,
+    email: string,
+    senha: string
+
+}
+
+
+
+
 class UsuarioServices {
     async cadastrarUsuario({nome,email,senha}: CadastrarUsuario){
         await prismaClient.usuario.create({
@@ -31,6 +42,23 @@ class UsuarioServices {
             }
         })
         return resposta
+    }
+
+    async AlterarUsuario({id, nome, email, senha}: AtualizarrUsuario){
+        await prismaClient.usuario.update({
+            where:{
+                id:id
+            },
+            data:{
+                nome:nome,
+                email:email,
+                senha:senha
+
+            }
+
+        })
+
+        return ({dados:"Usuario Alterado com Sucesso"})
     }
 }
 

@@ -19,5 +19,8 @@ routes.get("/VisualizarPerfil", new PerfilControllers().VisualizarPerfil)
 routes.get("/VisualizarManhwa", new ManhwaControllers().VisualizarManhwa)
 routes.get("/VisualizarCapitulos", new CapituloControllers().VisualizarCapitulos)
 
+//Metogo PUT
+routes.put("/AlterarUsuario", new UsuarioControllers().AlterarUsuario)
+
 
 export default routes

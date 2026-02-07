@@ -20,6 +20,20 @@ class UsuarioControllers {
         return res.json(resposta)
     }
 
+
+    async AlterarUsuario(req:Request, res:Response){
+        const {id, nome, email, senha} = req.body
+        const enviarDados = new UsuarioServices()
+        const resposta =  await enviarDados.AlterarUsuario({
+            id,
+            nome,
+            email,
+            senha
+        })
+
+        return res.json(resposta)
+    }
+
     
 }
 
