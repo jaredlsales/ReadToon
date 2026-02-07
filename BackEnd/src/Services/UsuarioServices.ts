@@ -20,6 +20,18 @@ class UsuarioServices {
 
         return ({dados:"Cadastro Efetuado com Sucesso"})
     }
+
+    async visualizarUsuario(){
+        const resposta = await prismaClient.usuario.findMany({
+            select:{
+                id:true,
+                nome:true,
+                email:true,
+                senha:true,
+            }
+        })
+        return resposta
+    }
 }
 
 

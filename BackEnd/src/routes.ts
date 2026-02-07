@@ -13,7 +13,8 @@ routes.post("/AtualizarPerfil", new PerfilControllers().AtualizarPerfil)
 routes.post("/CadastrarManhwa",new ManhwaControllers().CadastrarManhwa)
 routes.post("/CadastrarCapitulos", new CapituloControllers().CadastrarCapitulos)
 
-
+//Metodo GET
+routes.get("/VisualizarUsuario", new UsuarioControllers().VisualizarUsuario)
 
 
 export default routes
