@@ -15,6 +15,10 @@ interface AtualizarrUsuario {
 
 }
 
+interface DeletarUsuario {
+    id: string
+}
+
 
 
 
@@ -60,6 +64,18 @@ class UsuarioServices {
 
         return ({dados:"Usuario Alterado com Sucesso"})
     }
+
+    async DeletarUsuario({id}: DeletarUsuario){
+        await prismaClient.usuario.delete({
+            where:{
+                id:id
+            }
+
+        })
+
+        return ({dados:"Usuario Deletado com Sucesso!"})
+    }
+
 }
 
 

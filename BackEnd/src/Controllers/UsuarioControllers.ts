@@ -34,6 +34,16 @@ class UsuarioControllers {
         return res.json(resposta)
     }
 
+    async DeletarUsuario(req:Request, res:Response){
+        const {id} = req.params
+        const enviarDados = new UsuarioServices()
+        const resposta =  await enviarDados.DeletarUsuario({
+            id
+        })
+
+        return res.json(resposta)
+    }
+
     
 }
 
