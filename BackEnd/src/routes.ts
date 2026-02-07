@@ -21,6 +21,7 @@ routes.get("/VisualizarCapitulos", new CapituloControllers().VisualizarCapitulos
 
 //Metogo PUT
 routes.put("/AlterarUsuario", new UsuarioControllers().AlterarUsuario)
+routes.put("/AlterarPerfil", new PerfilControllers().AlterarPerfil)
 
 
 export default routes

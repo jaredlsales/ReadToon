@@ -19,6 +19,19 @@ class PerfilControllers {
         const resposta = await enviarDados.VisualizarPerfil()
         return res.json(resposta)
     }
+
+    async AlterarPerfil(req:Request, res:Response){
+        const {id, foto_url,preferencias, idUsuario} = req.body
+        const enviarDados =  new PerfilServices()
+        const resposta =  await enviarDados.AlterarPerfil({
+            id,
+            idUsuario,
+            foto_url,
+            preferencias
+        })
+
+        return res.json(resposta)
+    }
 }
 
 

@@ -6,6 +6,14 @@ interface Perfil {
     idUsuario: string
 }
 
+interface AlterarPerfil {
+    id: string,
+    foto_url: string,
+    preferencias: string,
+    idUsuario: string
+}
+
+
 class PerfilServices {
     async AtualizarPerfil({foto_url,preferencias,idUsuario}: Perfil){
         await prismaClient.perfil.create({
@@ -34,6 +42,22 @@ class PerfilServices {
 
         return resposta
         
+    }
+
+    async AlterarPerfil({id, idUsuario, foto_url, preferencias}: AlterarPerfil){
+        await prismaClient.perfil.update({
+            where:{
+                id:id
+            },
+            data:{
+                idUsuario:idUsuario,
+                foto_url:foto_url,
+                preferencias:preferencias
+                
+            }
+        })
+
+        return ({dados:"Perfil Alterado com Sucesso"})
     }
 }
 
