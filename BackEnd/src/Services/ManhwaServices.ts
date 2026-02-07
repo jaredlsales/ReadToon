@@ -8,6 +8,15 @@ interface Manhwa {
     capa_url: string
 }
 
+interface AlterarManhwa {
+    id: string,
+    titulo: string,
+    descricao: string,
+    autor: string,
+    genero: string,
+    capa_url: string
+}
+
 class ManhwaServices {
     async CadastrarManhwa({titulo,descricao,autor,genero,capa_url}: Manhwa){
         await prismaClient.manhwa.create({
@@ -44,6 +53,23 @@ class ManhwaServices {
         })
 
         return resposta
+    }
+
+    async AlterarManhwa({id,titulo,descricao,autor,genero,capa_url}: AlterarManhwa){
+        await prismaClient.manhwa.update({
+            where:{
+                id:id
+            },
+            data:{
+                titulo:titulo,
+                capa_url:capa_url,
+                autor:autor,
+                genero:genero,
+                descricao:descricao
+            }
+        })
+
+        return ({dados:"Manhwa Atualizado com Sucesso!"})
     }
 }
 
