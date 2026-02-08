@@ -4,16 +4,22 @@ import {ManhwaServices} from "../Services/ManhwaServices"
 class ManhwaControllers {
     async CadastrarManhwa(req:Request, res:Response){
         const {titulo, descricao, autor, genero, capa_url} = req.body
-        const enviarDados = new ManhwaServices()
-        const resposta =  await enviarDados.CadastrarManhwa({
-            titulo,
-            descricao,
-            autor,
-            genero,
-            capa_url
-        })
+        if(!req.file){
+            throw new Error ("Imagem com problema")
+        }else {
+            const {originalname, filename:capa_url} = req.file
+            const enviarDados = new ManhwaServices()
+            const resposta =  await enviarDados.CadastrarManhwa({
+                titulo,
+                descricao,
+                autor,
+                genero,
+                capa_url
+            })
 
-        return res.json(resposta)
+            return res.json(resposta) 
+            
+            }
     }
 
     async VisualizarManhwa(req:Request, res:Response){
