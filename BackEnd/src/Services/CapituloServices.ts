@@ -22,7 +22,8 @@ class CapituloServices {
     async CadastrarCapitulos({numero,capitulo_url_1,idManhwa}: Capitulos){
         await prismaClient.capitulo.create({
             data:{
-                numero:numero,
+                // Converte a string que vem do multer para número inteiro
+                numero: Number(numero),
                 capitulo_url_1:capitulo_url_1,
                 idManhwa:idManhwa
             }
@@ -53,7 +54,8 @@ class CapituloServices {
             data:{
                 idManhwa:idManhwa,
                 capitulo_url_1:capitulo_url_1,
-                numero:numero
+                // Converte a string que vem do multer para número inteiro
+                numero: Number(numero)
             }
         })
 

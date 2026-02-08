@@ -28,6 +28,12 @@ app.use((err:Error, req:Request, res:Response, next:NextFunction ) => {
     })
 })
 
+//"/files" endopint estatico
+app.use(
+    "/files",
+    express.static(path.resolve(__dirname, "..", "tmp"))
+)
+
 
 // Servidor 
 app.listen(3333, () => console.log("Servidor on-line na porta 3333"))

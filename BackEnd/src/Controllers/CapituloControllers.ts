@@ -4,14 +4,20 @@ import {CapituloServices} from "../Services/CapituloServices"
 class CapituloControllers {
     async CadastrarCapitulos(req:Request, res:Response){
         const {numero, capitulo_url_1, idManhwa} = req.body
-        const enviarDados =  new CapituloServices()
-        const resposta = await enviarDados.CadastrarCapitulos({
-            numero,
-            capitulo_url_1,
-            idManhwa
-        })
-        
-        return res.json(resposta)
+        if(!req.file){
+            throw new Error ("Imagem com problemas")
+        }else {
+            const {originalname, filename: capitulo_url_1} = req.file
+            const enviarDados =  new CapituloServices()
+            const resposta = await enviarDados.CadastrarCapitulos({
+                numero,
+                capitulo_url_1,
+                idManhwa
+            })
+            
+            return res.json(resposta)
+
+            }
     }
 
     async VisualizarCapitulos(req:Request, res:Response){
