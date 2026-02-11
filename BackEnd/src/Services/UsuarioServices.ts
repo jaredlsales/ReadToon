@@ -119,6 +119,8 @@ class UsuarioServices {
     }
 
     async AlterarUsuario({id, nome, email, senha}: AtualizarrUsuario){
+        //hash quando alterar a senha 
+        const senhaCrypte = await hash(senha,10)
         await prismaClient.usuario.update({
             where:{
                 id:id
@@ -126,7 +128,7 @@ class UsuarioServices {
             data:{
                 nome:nome,
                 email:email,
-                senha:senha
+                senha:senhaCrypte
 
             }
 
