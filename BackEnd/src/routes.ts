@@ -3,6 +3,7 @@ import {UsuarioControllers} from "./Controllers/UsuarioControllers"
 import {PerfilControllers} from "./Controllers/PerfilControllers"
 import {ManhwaControllers} from "./Controllers/ManhwaControllers"
 import {CapituloControllers} from "./Controllers/CapituloControllers"
+import {estaAutenticado} from "./Middleware/EstaAutenticado"
 import uploadConfig from "./Config/Multer"
 import multer from "multer"
 
@@ -23,7 +24,7 @@ routes.post("/LoginUsuario", new UsuarioControllers().LoginUsuario)
 
 //Metodo GET
 routes.get("/VisualizarUsuario", new UsuarioControllers().VisualizarUsuario)
-routes.get("/VisualizarPerfil", new PerfilControllers().VisualizarPerfil)
+routes.get("/VisualizarPerfil", estaAutenticado, new PerfilControllers().VisualizarPerfil)
 routes.get("/VisualizarManhwa", new ManhwaControllers().VisualizarManhwa)
 routes.get("/VisualizarCapitulos", new CapituloControllers().VisualizarCapitulos)
 

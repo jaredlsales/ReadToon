@@ -1,6 +1,7 @@
 import { warnEnvConflicts } from "@prisma/client/runtime/library";
 import prismaClient from "../Prisma/PrismaClient";
 import {compare, hash} from "bcryptjs"
+import { sign } from "jsonwebtoken";
 
 interface CadastrarUsuario {
     nome: string,
@@ -79,11 +80,28 @@ class UsuarioServices {
 
         const senhaCrypte = await compare(senha,emailExiste.senha)
         //console.log(senhaCrypte)
+        if(!senhaCrypte){
+            throw new Error ("Email ou senha Incorreto")
+         
+        }
 
-        if(senhaCrypte){
-            return ({dados:"Login Efetuado com Sucesso!"})
-        }else {
-            throw new Error ("Email ou Senha Incorreto")
+        const token = sign({
+            id: emailExiste.id,
+            nome: emailExiste.nome,
+            email: emailExiste.email
+        },
+        //Pegando variavel de ambiente -- subkect = sub = id (vai comparar o id do front com o back)
+            process.env.JWT_SECRET,
+            {
+                subject: emailExiste.id,
+                expiresIn: "12h"
+            }
+        )
+        return {
+            id: emailExiste.id,
+            nome:emailExiste.nome,
+            email:emailExiste.email,
+            token: token
         }
             
     }
