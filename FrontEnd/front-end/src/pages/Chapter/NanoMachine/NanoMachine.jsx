@@ -1,9 +1,9 @@
 
-export default function NanoMachine() {
+export default function NanoMachineChapter() {
     return(
         <>
         <div>
-            <h1>NanoMachine</h1>
+            <h1>NanoMachineChapter</h1>
         </div>
         </>
     )
