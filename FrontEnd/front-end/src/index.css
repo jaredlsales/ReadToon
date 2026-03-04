@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700;900&display=swap');
+
+@theme {
+  /* Cores exatas extraídas do seu código inspecionado */
+  --color-brand-purple: #913FE2;
+  --color-login-btn: #6F2598;
+  --color-search-bg: #16151D;
+  --color-readtoon-bg: #0F0F0F;
+  
+  /* Fonte Fira Sans para todo o projeto */
+  --font-fira: "Fira Sans", sans-serif;
+}
+
+body {
+  background-color: var(--color-readtoon-bg);
+  font-family: var(--font-fira);
+  color: white;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
