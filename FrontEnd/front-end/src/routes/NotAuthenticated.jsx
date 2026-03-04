@@ -14,8 +14,8 @@ export default function NotAuthenticated() {
     <BrowserRouter>
       {/* min-h-screen faz o app ocupar a tela toda; flex-col organiza topo e fundo */}
       <div className="flex flex-col min-h-screen bg-[#16151D]">
-        <Header/>
-        
+        <Header />
+
         {/* flex-grow faz essa parte ocupar todo o espaço vazio, empurrando o footer */}
         <main className="flex-grow">
           <Routes>
@@ -24,12 +24,15 @@ export default function NotAuthenticated() {
             <Route path="/RegisterAccount" element={<RegisterAccount />} />
             <Route path="/TermsOfServices" element={<TermsOfServices />} />
             <Route path="/NanoMachine" element={<NanoMachine />} />
-            <Route path="/NanoMachineChapter" element={<NanoMachineChapter />} />
+            <Route
+              path="/NanoMachineChapter"
+              element={<NanoMachineChapter />}
+            />
             <Route path="*" element={<Home />} />
           </Routes>
         </main>
 
-        <Footer/>
+        <Footer />
       </div>
     </BrowserRouter>
   );

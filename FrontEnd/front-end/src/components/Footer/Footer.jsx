@@ -39,7 +39,7 @@ export default function Footer() {
         {/* Rodapé Final com Copyright */}
         <div className="pb-6 text-center">
           <p className="text-white/40 text-[11px] uppercase tracking-widest">
-            © 2026 ReadToon - Todos os direitos reservados
+            © 2026 ReadToon
           </p>
         </div>
       </div>
