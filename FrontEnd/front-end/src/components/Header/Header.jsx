@@ -1,25 +1,26 @@
+import { Link } from "react-router-dom";
+
 export default function Header() {
   return (
     <header className="bg-[#913FE2] w-full shadow-md font-['Fira_Sans',sans-serif] sticky top-0 z-50">
       {/* Container principal com padding responsivo */}
       <div className="max-w-[1220px] mx-auto px-4 flex items-center justify-between h-14 gap-2">
         {/* Lado Esquerdo: Logo e Menu */}
-
         <div className="flex items-center gap-4 shrink-0">
           {/* Link da Logo */}
-          <a
-            className="flex h-10 w-10 shrink-0 items-center justify-center"
-            href="/"
+          <Link
+            to="/" // MUDANÇA AQUI: troque 'href' por 'to'
+            className="flex h-12 w-12 shrink-0 items-center justify-center" // Aumentei para h-12 para a logo não ficar esmagada
           >
-            {/* O segredo está aqui: overflow-hidden corta o que sobrar da imagem esticada */}
+            {/* O segredo do círculo perfeito continua aqui */}
             <div className="h-full w-full rounded-full border-2 border-black/40 overflow-hidden bg-black shadow-lg flex items-center justify-center">
               <img
-                className="h-full w-full object-cover scale-[2.5]" // Aumenta o zoom na imagem original para ignorar as bordas vazias
+                className="h-full w-full object-cover scale-[2.5]"
                 src="src/assets/logo.png"
                 alt="ReadToon Logo"
               />
             </div>
-          </a>
+          </Link>
 
           {/*<nav className="hidden lg:block">
             <ul className="flex flex-row items-center">
@@ -77,7 +78,7 @@ export default function Header() {
 
           {/* Botão Login: Ajusta o tamanho conforme a tela */}
           <div className="shrink-0">
-            <a href="/login">
+            <Link to="/Login">
               <button className="flex items-center gap-2 bg-[#6F2598] hover:bg-[#5a1f78] text-white px-3 sm:px-4 py-2 rounded-md transition-all h-9 shadow-sm">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +98,7 @@ export default function Header() {
                   Login
                 </span>
               </button>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
