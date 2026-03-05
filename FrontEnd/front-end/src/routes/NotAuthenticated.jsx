@@ -8,6 +8,14 @@ import NanoMachine from "../pages/Manhwa/NanoMachine/NanoMachine";
 import NanoMachineChapter from "../pages/Chapter/NanoMachine/NanoMachine";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import InfiniteMage from "@/pages/Manhwa/InfiniteMage/InfiniteMage";
+import InfiniteMageChapter from "@/pages/Chapter/InfiniteMage/InfiniteMage";
+import RevengeOfTheIron from "@/pages/Manhwa/RevengeOfTheIron/RevengeOfTheIron";
+import RevendeOfTheIronChapter from "@/pages/Chapter/RevengeOfTheIron/RevendeOfTheIron";
+import StarEmbracingSwordmaster from "@/pages/Manhwa/StarEmbracingSwordmaster/StarEmbracingSwordmaster";
+import StarEnbracingSwordmasterChapter from "@/pages/Chapter/StarEmbracingSwordmaster/StarEmbracingSwordmaster";
+import TheRegressedMercenary from "@/pages/Manhwa/TheRegressedMercenary/TheRegressedMercenary";
+import TheRegressedMercenaryChapter from "@/pages/Chapter/TheRegressedMercenary/TheRegressedMercenary";
 
 export default function NotAuthenticated() {
   return (
@@ -24,10 +32,15 @@ export default function NotAuthenticated() {
             <Route path="/RegisterAccount" element={<RegisterAccount />} />
             <Route path="/TermsOfServices" element={<TermsOfServices />} />
             <Route path="/NanoMachine" element={<NanoMachine />} />
-            <Route
-              path="/NanoMachineChapter"
-              element={<NanoMachineChapter />}
-            />
+            <Route path="/NanoMachineChapter"element={<NanoMachineChapter />} />
+            <Route path="/InfiniteMage" element={<InfiniteMage/>} />
+            <Route path="/InfiniteMageChapter" element={<InfiniteMageChapter/>} />
+            <Route path="/RevengeOfTheIron" element={<RevengeOfTheIron/>} />
+            <Route path="/RevendeOfTheIronChapter" element={<RevendeOfTheIronChapter/>} />
+            <Route path="/StarEmbracingSwordmaster" element={<StarEmbracingSwordmaster/>} />
+            <Route path="/StarEnbracingSwordmasterChapter" element={<StarEnbracingSwordmasterChapter/>} />
+            <Route path="/TheRegressedMercenary" element={<TheRegressedMercenary/>} />
+            <Route path="/TheRegressedMercenaryChapter" element={<TheRegressedMercenaryChapter/>} />
             <Route path="*" element={<Home />} />
           </Routes>
         </main>
