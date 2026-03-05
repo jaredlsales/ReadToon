@@ -15,8 +15,8 @@ const upload = multer(uploadConfig.upload("./tmp"))
 //Metodo POST
 routes.post("/CadastrarUsuario", new UsuarioControllers().CadastrarUsuario)
 routes.post("/AtualizarPerfil", new PerfilControllers().AtualizarPerfil)
-//Meotodo POST "upload file"
-routes.post("/CadastrarCapitulos", upload.single("file"), new CapituloControllers().CadastrarCapitulos)
+//Meotodo POST "upload file" - Array para receber maais de uma imagem
+routes.post("/CadastrarCapitulos", upload.array("file", 50), new CapituloControllers().CadastrarCapitulos)
 routes.post("/CadastrarManhwa", upload.single("file"), new ManhwaControllers().CadastrarManhwa)
 
 //Metodo POST Login

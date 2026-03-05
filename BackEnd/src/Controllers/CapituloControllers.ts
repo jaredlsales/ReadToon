@@ -3,15 +3,20 @@ import {CapituloServices} from "../Services/CapituloServices"
 
 class CapituloControllers {
     async CadastrarCapitulos(req:Request, res:Response){
-        const {numero, capitulo_url_1, idManhwa} = req.body
-        if(!req.file){
+        const {numero, idManhwa} = req.body
+        // 1. Mudança aqui: usamos req.files (plural)
+        const files = req.files as Express.Multer.File[];
+        if (!files || files.length === 0) {
             throw new Error ("Imagem com problemas")
         }else {
-            const {originalname, filename: capitulo_url_1} = req.file
+            // 2. Mudança aqui: Pegamos os nomes de todos os arquivos e juntamos
+            // Isso gera uma string: "hash-img1.png,hash-img2.png..."
+            const nomesImagens = files.map(file => file.filename).join(",");
+
             const enviarDados =  new CapituloServices()
             const resposta = await enviarDados.CadastrarCapitulos({
                 numero,
-                capitulo_url_1,
+                capitulo_url_1: nomesImagens, // Enviamos a string com todas as fotos
                 idManhwa
             })
             
