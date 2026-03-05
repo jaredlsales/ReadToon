@@ -1,4 +1,6 @@
 import PopularSideBar from "@/components/PopularSideBar/PopularSideBar";
+import HeroCarousel from "@/components/HeroCarousel/HeroCarousel";
+import LatestUpdates from "@/components/LatestUpdates/LatestUpdates";
 
 const Home = () => {
   return (
@@ -8,13 +10,17 @@ const Home = () => {
           
           {/* Lado Esquerdo: Conteúdo Principal */}
           <div className="space-y-10">
-            {/* Aqui você colocará os componentes que aparecem na imagem */}
+            
+            {/* 1. O Carrossel de Destaques (Hero) no topo da esquerda */}
             <section>
-              <h2 className="text-xl font-bold mb-4">Home</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {/* Cards de Manhwa aqui */}
-              </div>
+               <HeroCarousel />
             </section>
+
+            {/* 2. Adicionando o LatestUpdates aqui embaixo */}
+            <section>
+               <LatestUpdates />
+            </section>
+
           </div>
 
           {/* Lado Direito: Sua Sidebar Popular */}
