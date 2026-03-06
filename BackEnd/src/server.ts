@@ -31,7 +31,7 @@ app.use((err:Error, req:Request, res:Response, next:NextFunction ) => {
 //"/files" endopint estatico
 app.use(
     "/files",
-    express.static(path.resolve(__dirname, "..", "tmp"))
+    express.static(path.join(__dirname, "..", "tmp"))
 )
 
 

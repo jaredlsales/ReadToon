@@ -31,16 +31,16 @@ export default function NotAuthenticated() {
             <Route path="/Login" element={<Login />} />
             <Route path="/RegisterAccount" element={<RegisterAccount />} />
             <Route path="/TermsOfServices" element={<TermsOfServices />} />
-            <Route path="/NanoMachine" element={<NanoMachine />} />
-            <Route path="/NanoMachineChapter"element={<NanoMachineChapter />} />
-            <Route path="/InfiniteMage" element={<InfiniteMage/>} />
-            <Route path="/InfiniteMageChapter" element={<InfiniteMageChapter/>} />
-            <Route path="/RevengeOfTheIron" element={<RevengeOfTheIron/>} />
-            <Route path="/RevendeOfTheIronChapter" element={<RevendeOfTheIronChapter/>} />
-            <Route path="/StarEmbracingSwordmaster" element={<StarEmbracingSwordmaster/>} />
-            <Route path="/StarEnbracingSwordmasterChapter" element={<StarEnbracingSwordmasterChapter/>} />
-            <Route path="/TheRegressedMercenary" element={<TheRegressedMercenary/>} />
-            <Route path="/TheRegressedMercenaryChapter" element={<TheRegressedMercenaryChapter/>} />
+            <Route path="/Manhwa/NanoMachine/:slug" element={<NanoMachine />} />
+            <Route path="/Read/NanoMachineChapter/:slug/:chapterNumber"element={<NanoMachineChapter />} />
+            <Route path="/Manhwa/InfiniteMage/:slug" element={<InfiniteMage/>} />
+            <Route path="/Read/InfiniteMageChapter/:slug/:chapterNumber" element={<InfiniteMageChapter/>} />
+            <Route path="/Manhwa/RevengeOfTheIron/:slug" element={<RevengeOfTheIron/>} />
+            <Route path="/Read/RevendeOfTheIronChapter/:slug/:chapterNumber" element={<RevendeOfTheIronChapter/>} />
+            <Route path="/Manhwa/StarEmbracingSwordmaster/:slug" element={<StarEmbracingSwordmaster/>} />
+            <Route path="/Read/StarEnbracingSwordmasterChapter/:slug/:chapterNumber" element={<StarEnbracingSwordmasterChapter/>} />
+            <Route path="/Manhwa/TheRegressedMercenary/:slug" element={<TheRegressedMercenary/>} />
+            <Route path="/Read/TheRegressedMercenaryChapter:slug/:chapterNumber" element={<TheRegressedMercenaryChapter/>} />
             <Route path="*" element={<Home />} />
           </Routes>
         </main>
