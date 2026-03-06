@@ -15,7 +15,6 @@ const NavBarChapter = ({ capitulos, capituloAtual, slug }) => {
 
   return (
     <div className="flex flex-col md:flex-row flex-wrap gap-y-4 justify-between items-center w-full bg-[#111] p-4 rounded-md border border-white/5">
-      
       {/* Seletores de Capítulo e Qualidade */}
       <div className="flex flex-wrap gap-2 sm:flex-nowrap w-full max-w-[600px]">
         

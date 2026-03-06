@@ -2,23 +2,39 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Scrollbar = ({ capitulos, slug, manhwaTitle }) => {
-  // Pegamos o primeiro e o último com segurança para os cards roxos
+  // Pegamos o primeiro e o último com segurança
   const primeiroCap =
     capitulos && capitulos.length > 0 ? capitulos[capitulos.length - 1] : null;
   const ultimoCap = capitulos && capitulos.length > 0 ? capitulos[0] : null;
 
+  // Função para garantir que o link aponte para a rota de LEITURA correta
+  const getReadPath = (chapterNum) => {
+    if (!chapterNum) return "#";
+    
+    // Mapeamento baseado no título para bater com suas rotas do App.js
+    if (manhwaTitle === "Nano Machine") return `/Read/NanoMachineChapter/${slug}/${chapterNum}`;
+    if (manhwaTitle === "Infinite Mage") return `/Read/InfiniteMageChapter/${slug}/${chapterNum}`;
+    if (manhwaTitle === "Star-Embracing Swordmaster") return `/Read/StarEnbracingSwordmasterChapter/${slug}/${chapterNum}`;
+    if (manhwaTitle === "Revenge of the Iron-Blooded Sword Hound") return `/Read/RevendeOfTheIronChapter/${slug}/${chapterNum}`;
+    if (manhwaTitle === "The Regressed Mercenary's Machinations") return `/Read/TheRegressedMercenaryChapter/${slug}/${chapterNum}`;
+    
+    // Fallback genérico caso precise
+    return `/read/${slug}/${chapterNum}`;
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-2 px-1">
-        <h2 className="text-xl font-bold  border-l-4 border-[#8E3FDD] pl-3 text-white">
+        <h2 className="text-xl font-bold border-l-4 border-[#8E3FDD] pl-3 text-white">
           Chapter <span className="text-[#8E3FDD] ml-1">{manhwaTitle || "Loading..."}</span>
         </h2>
       </div>
+
       {/* Botões de Destaque Superiores */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Card do Primeiro Capítulo */}
         <Link
-          to={`/NanoMachine/${slug}/${primeiroCap?.numero}`}
+          to={getReadPath(primeiroCap?.numero)}
           className="bg-[#8E3FDD] p-6 rounded-md text-center border border-white/5 shadow-lg hover:brightness-110 transition-all"
         >
           <span className="block text-xs uppercase text-white/70 font-bold mb-1 tracking-wider">
@@ -31,7 +47,7 @@ const Scrollbar = ({ capitulos, slug, manhwaTitle }) => {
 
         {/* Card do Último Capítulo (Latest) */}
         <Link
-          to={`/NanoMachine/${slug}/${ultimoCap?.numero}`}
+          to={getReadPath(ultimoCap?.numero)}
           className="bg-[#8E3FDD] p-6 rounded-md text-center border border-white/5 shadow-lg hover:brightness-110 transition-all"
         >
           <span className="block text-xs uppercase text-white/70 font-bold mb-1 tracking-wider">
@@ -59,12 +75,10 @@ const Scrollbar = ({ capitulos, slug, manhwaTitle }) => {
             capitulos.map((chapter) => (
               <Link
                 key={chapter.id}
-                to={`/read/${slug}/${chapter.numero}`}
+                to={getReadPath(chapter.numero)}
                 className="group block bg-[#222] border border-white/5 rounded-md hover:bg-[#282828] transition-all relative overflow-hidden"
               >
-                {/* Detalhe roxo lateral */}
                 <div className="absolute left-0 top-0 bottom-0 w-[4px] bg-[#8E3FDD] group-hover:w-[6px] transition-all"></div>
-
                 <div className="py-4 px-6">
                   <span className="text-white font-bold text-sm tracking-wide">
                     Chapter {chapter.numero}

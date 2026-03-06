@@ -40,7 +40,7 @@ export default function NotAuthenticated() {
             <Route path="/Manhwa/StarEmbracingSwordmaster/:slug" element={<StarEmbracingSwordmaster/>} />
             <Route path="/Read/StarEnbracingSwordmasterChapter/:slug/:chapterNumber" element={<StarEnbracingSwordmasterChapter/>} />
             <Route path="/Manhwa/TheRegressedMercenary/:slug" element={<TheRegressedMercenary/>} />
-            <Route path="/Read/TheRegressedMercenaryChapter:slug/:chapterNumber" element={<TheRegressedMercenaryChapter/>} />
+            <Route path="/Read/TheRegressedMercenaryChapter/:slug/:chapterNumber" element={<TheRegressedMercenaryChapter/>} />
             <Route path="*" element={<Home />} />
           </Routes>
         </main>

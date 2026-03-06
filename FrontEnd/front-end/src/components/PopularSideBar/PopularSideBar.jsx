@@ -27,7 +27,7 @@ const PopularSideBar = () => {
       <div className="bg-[#222] border-b border-[#312f40] px-[15px] py-[8px]">
         <h3 className="text-[15px] text-white font-semibold">Popular</h3>
       </div>
-
+      
       {/* Lista de Obras (Versão Atual) */}
       <div className="flex flex-col">
         {loading ? (
