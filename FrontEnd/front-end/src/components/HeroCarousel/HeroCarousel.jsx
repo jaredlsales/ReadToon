@@ -7,13 +7,10 @@ const HeroCarousel = () => {
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Função auxiliar para criar a URL amigável (slug) baseada no título
   const getSlug = (titulo) => titulo.toLowerCase().replace(/\s+/g, "-");
 
-  // Função para mapear qual Componente de Manhwa abrir baseada no título
   const getManhwaPath = (titulo) => {
     const slug = getSlug(titulo);
-    // Removemos espaços e deixamos igual às rotas que você definiu no NotAuthenticated
     if (titulo === "Nano Machine") return `/Manhwa/NanoMachine/${slug}`;
     if (titulo === "Infinite Mage") return `/Manhwa/InfiniteMage/${slug}`;
     if (titulo === "Star-Embracing Swordmaster")
@@ -49,16 +46,15 @@ const HeroCarousel = () => {
 
   if (loading)
     return (
-      <div className="h-[280px] bg-[#222] animate-pulse rounded-[3px] border border-[#312f40]" />
+      <div className="h-[250px] sm:h-[300px] bg-[#222] animate-pulse rounded-[3px] border border-[#312f40]" />
     );
   if (manhwas.length === 0) return null;
 
   const current = manhwas[currentIndex];
-  // encodeURI para tratar espaços nos nomes das capas vindos do banco
   const fullImageUrl = `http://localhost:3333/files/${encodeURI(current.capa_url)}`;
 
   return (
-    <div className="relative overflow-hidden rounded-[3px] border border-[#312f40] bg-[#222] text-white shadow-xl h-[300px]">
+    <div className="relative overflow-hidden rounded-[3px] border border-[#312f40] bg-[#222] text-white shadow-xl min-h-[250px] sm:h-[300px]">
       {/* Background Blur */}
       <div className="absolute inset-0 -z-10">
         <img
@@ -68,39 +64,37 @@ const HeroCarousel = () => {
         />
       </div>
 
-      <div className="grid grid-cols-12 items-center p-6 h-full">
-        <div className="col-span-12 sm:col-span-9 pr-8">
-          <span className="text-[11px] font-bold uppercase tracking-widest text-[#913fe2]">
+      <div className="grid grid-cols-12 items-center h-full p-4 sm:p-6">
+        <div className="col-span-12 sm:col-span-9">
+          <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#913fe2]">
             {current.genero}
           </span>
 
-          {/* Título agora é um Link */}
           <Link to={getManhwaPath(current.titulo)}>
-            <h2 className="mt-1 text-2xl font-bold line-clamp-2 hover:text-[#913fe2] cursor-pointer transition-colors">
+            <h2 className="mt-1 text-xl sm:text-2xl font-bold line-clamp-2 hover:text-[#913fe2] cursor-pointer transition-colors">
               {current.titulo}
             </h2>
           </Link>
 
-          <div className="mt-4">
-            <span className="block uppercase text-[10px] font-bold tracking-widest text-[#888]">
+          <div className="mt-2 sm:mt-4">
+            <span className="block uppercase text-[9px] sm:text-[10px] font-bold tracking-widest text-[#888]">
               Sinopse
             </span>
-            <p className="mt-1 text-[13px] text-gray-300 line-clamp-3 text-justify leading-relaxed">
+            <p className="mt-1 text-xs sm:text-[13px] text-gray-300 line-clamp-2 sm:line-clamp-3 text-justify leading-relaxed">
               {current.descricao}
             </p>
           </div>
 
-          <div className="mt-6 flex items-center gap-4">
-            {/* Botão Read Now agora é um Link */}
+          <div className="mt-3 sm:mt-6 flex items-center gap-4">
             <Link to={getManhwaPath(current.titulo)}>
-              <button className="bg-[#913fe2] px-6 py-2 rounded-[3px] text-[12px] font-bold hover:bg-[#7a32c2] transition-all shadow-lg hover:shadow-[#913fe2]/20">
+              <button className="bg-[#913fe2] px-5 py-1.5 sm:px-6 sm:py-2 rounded-[3px] text-[11px] sm:text-[12px] font-bold hover:bg-[#7a32c2] transition-all shadow-lg hover:shadow-[#913fe2]/20">
                 Read Now
               </button>
             </Link>
           </div>
         </div>
 
-        {/* Poster Lateral */}
+        {/* Poster Lateral - oculto em mobile */}
         <div className="hidden sm:col-span-3 sm:flex justify-end">
           <Link
             to={getManhwaPath(current.titulo)}
@@ -116,13 +110,13 @@ const HeroCarousel = () => {
       </div>
 
       {/* Dots */}
-      <div className="absolute bottom-3 left-6 flex gap-1.5">
+      <div className="absolute bottom-2 left-4 sm:bottom-3 sm:left-6 flex gap-1.5">
         {manhwas.slice(0, 5).map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
             className={`h-1 rounded-full transition-all ${
-              index === currentIndex ? "w-6 bg-[#913fe2]" : "w-2 bg-[#444]"
+              index === currentIndex ? "w-5 sm:w-6 bg-[#913fe2]" : "w-1.5 sm:w-2 bg-[#444]"
             }`}
           />
         ))}
