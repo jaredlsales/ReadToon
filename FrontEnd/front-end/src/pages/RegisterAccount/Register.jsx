@@ -9,24 +9,24 @@ export default function RegisterAccount() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a] p-4 font-sans">
       <div className="bg-[#1c1c1c] p-8 rounded-2xl shadow-2xl w-full max-w-md border border-white/5">
-        
         {/* Cabeçalho Reutilizado do Login para manter o padrão */}
         <div className="flex flex-col items-center mb-6">
           <div className="w-20 h-20 mb-4 relative">
             <div className="h-full w-full rounded-full border-2 border-purple-600/30 overflow-hidden bg-black shadow-xl flex items-center justify-center">
               <img
-                className="h-full w-full object-cover scale-[2.5]"
-                src="/src/assets/logo.png"
-                alt="Logo"
+                className="h-full w-full object-cover scale-[1]"
+                src="/Readtoon.png"
+                alt="ReadToon Logo"
               />
             </div>
           </div>
-          <h2 className="text-2xl font-bold text-white tracking-tight">ReadToon</h2>
+          <h2 className="text-2xl font-bold text-white tracking-tight">
+            ReadToon
+          </h2>
           <p className="text-gray-400 text-sm mt-1">Register your account</p>
         </div>
 
         <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-          
           {/* Campo de Usuário */}
           <div className="relative group">
             <User className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-gray-500 group-focus-within:text-purple-500 transition-colors" />
@@ -58,12 +58,16 @@ export default function RegisterAccount() {
               placeholder="Password"
               className="w-full bg-[#121212] text-white border border-gray-800 rounded-xl p-4 pl-10 focus:outline-none focus:ring-2 focus:ring-purple-600/50 focus:border-purple-600 transition-all placeholder:text-gray-600"
             />
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-white"
             >
-              {showPassword ? <Eye className="size-5" /> : <EyeOff className="size-5" />}
+              {showPassword ? (
+                <Eye className="size-5" />
+              ) : (
+                <EyeOff className="size-5" />
+              )}
             </button>
           </div>
 
@@ -76,23 +80,33 @@ export default function RegisterAccount() {
               placeholder="Password Confirm"
               className="w-full bg-[#121212] text-white border border-gray-800 rounded-xl p-4 pl-10 focus:outline-none focus:ring-2 focus:ring-purple-600/50 focus:border-purple-600 transition-all placeholder:text-gray-600"
             />
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-white"
             >
-              {showConfirmPassword ? <Eye className="size-5" /> : <EyeOff className="size-5" />}
+              {showConfirmPassword ? (
+                <Eye className="size-5" />
+              ) : (
+                <EyeOff className="size-5" />
+              )}
             </button>
           </div>
 
-          <button type="submit" className="w-full py-3.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold shadow-lg shadow-purple-600/20 active:scale-[0.98] transition-all">
+          <button
+            type="submit"
+            className="w-full py-3.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold shadow-lg shadow-purple-600/20 active:scale-[0.98] transition-all"
+          >
             Register
           </button>
         </form>
 
         <div className="text-center text-sm text-gray-500 mt-6">
           Already have an Account?{" "}
-          <Link to="/Login" className="text-white font-bold hover:underline underline-offset-4">
+          <Link
+            to="/Login"
+            className="text-white font-bold hover:underline underline-offset-4"
+          >
             Login
           </Link>
         </div>
@@ -109,7 +123,6 @@ export default function RegisterAccount() {
           <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="size-5" />
           <span className="text-white font-semibold text-sm">Continue with Google</span>
         </button>*/}
-
       </div>
     </div>
   );

@@ -16,9 +16,9 @@ export default function Login() {
           <div className="w-24 h-24 mb-4 relative">
             <div className="h-full w-full rounded-full border-2 border-purple-600/30 overflow-hidden bg-black shadow-xl flex items-center justify-center">
               <img
-                className="h-full w-full object-cover scale-[2.5] transition-transform duration-500 hover:scale-[2.8]"
-                src="/src/assets/logo.png"
-                alt="Readtoon Scans Logo"
+                className="h-full w-full object-cover scale-[1]"
+                src="/Readtoon.png"
+                alt="ReadToon Logo"
               />
             </div>
             <div className="absolute inset-0 bg-purple-600/20 blur-xl rounded-full -z-10"></div>

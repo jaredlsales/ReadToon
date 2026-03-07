@@ -24,8 +24,8 @@ export default function Footer() {
             {/* O segredo do círculo perfeito com o zoom de 2.5 */}
             <div className="h-full w-full rounded-full border-2 border-black/40 overflow-hidden bg-black shadow-lg flex items-center justify-center">
               <img
-                className="h-full w-full object-cover scale-[2.5]"
-                src="src/assets/logo.png"
+                className="h-full w-full object-cover scale-[1]"
+                src="/Readtoon.png"
                 alt="ReadToon Logo"
               />
             </div>

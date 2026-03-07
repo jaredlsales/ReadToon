@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiLocal from "@/api/apiLocal";
+import Readtoon from "../../../public/Readtoon.png";
 
 export default function Header() {
   const [busca, setBusca] = useState("");
@@ -63,8 +64,8 @@ export default function Header() {
           >
             <div className="h-full w-full rounded-full border-2 border-black/40 overflow-hidden bg-black shadow-lg flex items-center justify-center transition-transform hover:scale-105">
               <img
-                className="h-full w-full object-cover scale-[2.5]"
-                src="/src/assets/logo.png"
+                className="h-full w-full object-cover scale-[1]"
+                src="/Readtoon.png"
                 alt="ReadToon Logo"
               />
             </div>
