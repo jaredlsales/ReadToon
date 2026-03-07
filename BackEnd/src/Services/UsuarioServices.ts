@@ -1,6 +1,6 @@
 import { warnEnvConflicts } from "@prisma/client/runtime/library";
 import prismaClient from "../Prisma/PrismaClient";
-import {compare, hash} from "bcryptjs"
+import { compare, hash } from "bcryptjs"
 import { sign } from "jsonwebtoken";
 
 interface CadastrarUsuario {
@@ -27,62 +27,67 @@ interface DeletarUsuario {
     id: string
 }
 
+interface AtualizarSenha {
+    usuario_id: string;
+    senhaAntiga: string;
+    novaSenha: string;
+}
 
 
 
 class UsuarioServices {
-    async cadastrarUsuario({nome,email,senha}: CadastrarUsuario){
+    async cadastrarUsuario({ nome, email, senha }: CadastrarUsuario) {
         //emailExiste = faz uma consunta no bando de dados se já existe na base de dados
         //OR = Não dizer qual está cadastrado e uma boa pratica
         const emailExiste = await prismaClient.usuario.findFirst({
-            where:{
-                OR:[
+            where: {
+                OR: [
                     {
-                        email:email
+                        email: email
                     },
                     {
-                        senha:senha
+                        senha: senha
                     }
                 ]
             }
         })
 
-        if(emailExiste){
+        if (emailExiste) {
             throw new Error("Email ou Senha já está cadastrado")
         }
 
         //senhaCrypte =  Seria a Cryptografia do senha com uma hash
         // 8 - 10 é um numero padrão, pela quantiade de vezes que ele vai criptgrofar
-        const senhaCrypte = await hash(senha,10)
+        const senhaCrypte = await hash(senha, 10)
 
         await prismaClient.usuario.create({
 
-            data:{
-                nome:nome,
-                email:email,
-                senha:senhaCrypte
+            data: {
+                nome: nome,
+                email: email,
+                senha: senhaCrypte
             }
         })
 
-        return ({dados:"Cadastro Efetuado com Sucesso"})
+        return ({ dados: "Cadastro Efetuado com Sucesso" })
     }
 
-    async LoginUsuario({email,senha}: LoginUsuario){
+    async LoginUsuario({ email, senha }: LoginUsuario) {
         const emailExiste = await prismaClient.usuario.findFirst({
-            where:{
-                email:email
+            where: {
+                email: email
             }
         })
 
-        if(!emailExiste){
-            throw new Error ("Login Incorreto")
+        if (!emailExiste) {
+            throw new Error("Login Incorreto")
         }
 
-        const senhaCrypte = await compare(senha,emailExiste.senha)
+        const senhaCrypte = await compare(senha, emailExiste.senha)
         //console.log(senhaCrypte)
-        if(!senhaCrypte){
-            throw new Error ("Email ou senha Incorreto")
-         
+        if (!senhaCrypte) {
+            throw new Error("Email ou senha Incorreto")
+
         }
 
         const token = sign({
@@ -90,7 +95,7 @@ class UsuarioServices {
             nome: emailExiste.nome,
             email: emailExiste.email
         },
-        //Pegando variavel de ambiente -- subkect = sub = id (vai comparar o id do front com o back)
+            //Pegando variavel de ambiente -- subkect = sub = id (vai comparar o id do front com o back)
             process.env.JWT_SECRET,
             {
                 subject: emailExiste.id,
@@ -99,56 +104,82 @@ class UsuarioServices {
         )
         return {
             id: emailExiste.id,
-            nome:emailExiste.nome,
-            email:emailExiste.email,
+            nome: emailExiste.nome,
+            email: emailExiste.email,
             token: token
         }
-            
+
     }
 
-    async visualizarUsuario(){
+    async visualizarUsuario() {
         const resposta = await prismaClient.usuario.findMany({
-            select:{
-                id:true,
-                nome:true,
-                email:true,
-                senha:true
+            select: {
+                id: true,
+                nome: true,
+                email: true,
+                senha: true
             }
         })
         return resposta
     }
 
-    async AlterarUsuario({id, nome, email, senha}: AtualizarrUsuario){
+    async AlterarUsuario({ id, nome, email, senha }: AtualizarrUsuario) {
         //hash quando alterar a senha 
-        const senhaCrypte = await hash(senha,10)
+        const senhaCrypte = await hash(senha, 10)
         await prismaClient.usuario.update({
-            where:{
-                id:id
+            where: {
+                id: id
             },
-            data:{
-                nome:nome,
-                email:email,
-                senha:senhaCrypte
+            data: {
+                nome: nome,
+                email: email,
+                senha: senhaCrypte
 
             }
 
         })
 
-        return ({dados:"Usuario Alterado com Sucesso"})
+        return ({ dados: "Usuario Alterado com Sucesso" })
     }
 
-    async DeletarUsuario({id}: DeletarUsuario){
+    async alterarSenha({ usuario_id, senhaAntiga, novaSenha }: AtualizarSenha) {
+        const usuario = await prismaClient.usuario.findUnique({
+            where: { id: usuario_id }
+        });
+
+        if (!usuario) {
+            throw new Error("Usuário não encontrado");
+        }
+
+        // Compara a senha antiga com a do banco
+        const senhaBate = await compare(senhaAntiga, usuario.senha);
+        if (!senhaBate) {
+            throw new Error("Senha atual incorreta");
+        }
+
+        // Gera o novo hash
+        const novaSenhaHash = await hash(novaSenha, 10);
+
+        await prismaClient.usuario.update({
+            where: { id: usuario_id },
+            data: { senha: novaSenhaHash }
+        });
+
+        return { dados: "Senha alterada com sucesso!" };
+    }
+
+    async DeletarUsuario({ id }: DeletarUsuario) {
         await prismaClient.usuario.delete({
-            where:{
-                id:id
+            where: {
+                id: id
             }
 
         })
 
-        return ({dados:"Usuario Deletado com Sucesso!"})
+        return ({ dados: "Usuario Deletado com Sucesso!" })
     }
 
 }
 
 
-export {UsuarioServices}
+export { UsuarioServices }

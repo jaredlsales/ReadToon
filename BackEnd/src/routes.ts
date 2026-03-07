@@ -34,6 +34,9 @@ routes.put("/AlterarPerfil",estaAutenticado, upload.single("file"), new PerfilCo
 routes.put("/AlterarManhwa", new ManhwaControllers().AlterarManhwa)
 routes.put("/AlterarCapitulos", new CapituloControllers().AlterarCapitulos)
 
+// PUT um endpoint expecifico para alterar senha. Mais seguro
+routes.put("/AlterarSenha", estaAutenticado, new UsuarioControllers().AlterarSenha)
+
 //Metodo DELETE
 routes.delete("/DeletarUsuario/:id", new UsuarioControllers().DeletarUsuario)
 routes.delete("/DeletarPerfil/:id", new PerfilControllers().DeletarPerfil)

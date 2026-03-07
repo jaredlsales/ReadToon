@@ -1,11 +1,11 @@
-import {Request, Response} from "express"
+import { Request, Response } from "express"
 import { UsuarioServices } from "../Services/UsuarioServices"
 
 class UsuarioControllers {
-    async CadastrarUsuario(req:Request, res:Response){
-        const {nome, email, senha} = req.body
+    async CadastrarUsuario(req: Request, res: Response) {
+        const { nome, email, senha } = req.body
         const enviarDados = new UsuarioServices()
-        const resposta =  await enviarDados.cadastrarUsuario({
+        const resposta = await enviarDados.cadastrarUsuario({
             nome,
             email,
             senha
@@ -14,10 +14,10 @@ class UsuarioControllers {
         return res.json(resposta)
     }
 
-    async LoginUsuario(req:Request, res:Response){
-        const {email, senha} = req.body
-        const enviarDados =  new UsuarioServices()
-        const resposta =  await enviarDados.LoginUsuario({
+    async LoginUsuario(req: Request, res: Response) {
+        const { email, senha } = req.body
+        const enviarDados = new UsuarioServices()
+        const resposta = await enviarDados.LoginUsuario({
             email,
             senha
         })
@@ -25,17 +25,17 @@ class UsuarioControllers {
         return res.json(resposta)
     }
 
-    async VisualizarUsuario(req:Request, res:Response){
-        const enviarDados =  new UsuarioServices()
-        const resposta =  await enviarDados.visualizarUsuario()
+    async VisualizarUsuario(req: Request, res: Response) {
+        const enviarDados = new UsuarioServices()
+        const resposta = await enviarDados.visualizarUsuario()
         return res.json(resposta)
     }
 
 
-    async AlterarUsuario(req:Request, res:Response){
-        const {id, nome, email, senha} = req.body
+    async AlterarUsuario(req: Request, res: Response) {
+        const { id, nome, email, senha } = req.body
         const enviarDados = new UsuarioServices()
-        const resposta =  await enviarDados.AlterarUsuario({
+        const resposta = await enviarDados.AlterarUsuario({
             id,
             nome,
             email,
@@ -45,17 +45,31 @@ class UsuarioControllers {
         return res.json(resposta)
     }
 
-    async DeletarUsuario(req:Request, res:Response){
-        const {id} = req.params
+    async AlterarSenha(req: Request, res: Response) {
+        const { senhaAntiga, novaSenha } = req.body;
+        const usuario_id = req.userID; // Pegando do middleware de autenticação
+
+        const enviarDados = new UsuarioServices();
+        const resposta = await enviarDados.alterarSenha({
+            usuario_id,
+            senhaAntiga,
+            novaSenha
+        });
+
+        return res.json(resposta);
+    }
+
+    async DeletarUsuario(req: Request, res: Response) {
+        const { id } = req.params
         const enviarDados = new UsuarioServices()
-        const resposta =  await enviarDados.DeletarUsuario({
+        const resposta = await enviarDados.DeletarUsuario({
             id
         })
 
         return res.json(resposta)
     }
 
-    
+
 }
 
-export {UsuarioControllers}
+export { UsuarioControllers }
