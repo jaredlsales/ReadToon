@@ -30,7 +30,7 @@ routes.get("/VisualizarCapitulos", new CapituloControllers().VisualizarCapitulos
 
 //Metogo PUT
 routes.put("/AlterarUsuario",estaAutenticado, new UsuarioControllers().AlterarUsuario)
-routes.put("/AlterarPerfil",estaAutenticado, new PerfilControllers().AlterarPerfil)
+routes.put("/AlterarPerfil",estaAutenticado, upload.single("file"), new PerfilControllers().AlterarPerfil)
 routes.put("/AlterarManhwa", new ManhwaControllers().AlterarManhwa)
 routes.put("/AlterarCapitulos", new CapituloControllers().AlterarCapitulos)
 

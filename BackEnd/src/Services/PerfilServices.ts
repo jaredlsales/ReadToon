@@ -20,62 +20,66 @@ interface DeletarPerfil {
 
 
 class PerfilServices {
-    async AtualizarPerfil({foto_url,preferencias,idUsuario}: Perfil){
+    async AtualizarPerfil({ foto_url, preferencias, idUsuario }: Perfil) {
         await prismaClient.perfil.create({
-            data:{
+            data: {
                 foto_url,
                 preferencias,
                 idUsuario
             }
         })
 
-        return ({dados:"Perfil Atualizado com sucesso"})
+        return ({ dados: "Perfil Atualizado com sucesso" })
     }
 
 
-    async VisualizarPerfil(){
-        const resposta = await prismaClient.perfil.findMany({
-            select:{
-                id: true,
-                idUsuario:true,
-                foto_url:true,
-                preferencias: true,
-                data_criacao: true
-            }
+    async VisualizarPerfil(idUsuario: string) { // Receba o ID do usuário logado
+        // Tenta encontrar o perfil do usuário
+        let perfil = await prismaClient.perfil.findFirst({
+            where: { idUsuario: idUsuario },
+            include: { usuario: true }
+        });
 
-        })
+        // Se não existir perfil para este usuário, criamos um básico agora
+        if (!perfil) {
+            perfil = await prismaClient.perfil.create({
+                data: {
+                    idUsuario: idUsuario,
+                    foto_url: "default-avatar.png", // Esse arquivo TEM que estar na pasta tmp"
+                    preferencias: "" // Inicia vazio
+                },
+                include: { usuario: true }
+            });
+        }
 
-        return resposta
-        
+        return perfil;
     }
 
     //Alterecao realizado pra mudar de foto no Perfil
-    async AlterarPerfil({id, idUsuario, foto_url, preferencias}: AlterarPerfil){
+    async AlterarPerfil({ id, idUsuario, foto_url, preferencias }: AlterarPerfil) {
         await prismaClient.perfil.update({
-            where:{
-                id:id
+            where: {
+                id: id // O Prisma usa o ID primário para encontrar o registro
             },
-            data:{
-                idUsuario:idUsuario,
-                // Lógica inteligente: Só adiciona foto_url ao objeto 'data' se ela existir
+            data: {
+                // Remova o idUsuario daqui para evitar erros de restrição @unique
                 ...(foto_url && { foto_url: foto_url }),
-                preferencias:preferencias
-                
+                preferencias: preferencias
             }
         })
 
-        return ({dados:"Perfil Alterado com Sucesso"})
+        return ({ dados: "Perfil Alterado com Sucesso" })
     }
 
-    async DeletarPerfil({id}: DeletarPerfil){
+    async DeletarPerfil({ id }: DeletarPerfil) {
         await prismaClient.perfil.delete({
-            where:{
-                id:id
+            where: {
+                id: id
             }
         })
 
-        return ({dados:"Perfil Deletado com Sucesso"})
+        return ({ dados: "Perfil Deletado com Sucesso" })
     }
 }
 
-export {PerfilServices}
+export { PerfilServices }

@@ -112,7 +112,7 @@ export default function LatestUpdates() {
                         to={getReadPath(m.titulo, cap.numero)}
                         className="flex items-center hover:text-white truncate transition-colors"
                       >
-                        <Play className="w-3 h-3 text-[#9d4942] mr-2 fill-current" />
+                        <Play className="w-3 h-3 text-purple-500 mr-2 fill-current" />
                         Chapter {cap.numero}
                       </Link>
 

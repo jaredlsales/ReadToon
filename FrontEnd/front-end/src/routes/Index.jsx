@@ -4,11 +4,11 @@ import NotAuthenticated from "./NotAuthenticated";
 
 export default function Rotas(){
 
-    const autenticado =  false
+    const token = localStorage.getItem("@readtoon:token");
 
 
     //Se a condição verdadeira vai aparecer Autenti.. ou vai se for false vai aparecer NotAuthenti..
     return(
-        autenticado === true ? <Authenticated/> : <NotAuthenticated/>
+        token ? <Authenticated/> : <NotAuthenticated/>
     )
 }

@@ -10,35 +10,36 @@ export default function EditProfileCard() {
     "/images/profile-picture.webp",
   );
 
-  // Estados para armazenar os IDs reais que vêm do banco
   const [idPerfil, setIdPerfil] = useState("");
   const [idUsuario, setIdUsuario] = useState("");
 
-  // 1. CARREGAR DADOS DO BANCO AO ABRIR A PÁGINA
+  const FOTO_PADRAO = "/images/profile-picture.webp";
+
   useEffect(() => {
     async function loadUserData() {
       try {
+        const token = localStorage.getItem("@readtoon:token");
+        if (token) {
+          apiLocal.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        }
+
         const response = await apiLocal.get("/VisualizarPerfil");
-        // O seu VisualizarPerfil retorna um array ou objeto com os dados do usuário e perfil
-        const data = Array.isArray(response.data)
-          ? response.data[0]
-          : response.data;
+        const data = response.data;
 
         if (data) {
-          setName(data.nome || "");
-          setEmail(data.email || "");
+          setIdPerfil(data.id || "");
+          setIdUsuario(data.idUsuario || "");
+          setDescription(data.preferencias || "");
 
-          if (data.perfil) {
-            setIdPerfil(data.perfil.id);
-            setIdUsuario(data.perfil.idUsuario);
-            setDescription(data.perfil.preferencias || "");
+          if (data.foto_url) {
+            setFotoPerfilUrl(`http://localhost:3333/files/${data.foto_url}`);
+          } else {
+            setFotoPerfilUrl(FOTO_PADRAO);
+          }
 
-            // Se já existir uma foto no banco, monta a URL da sua API
-            if (data.perfil.foto_url) {
-              setFotoPerfilUrl(
-                `http://localhost:3333/files/${data.perfil.foto_url}`,
-              );
-            }
+          if (data.usuario) {
+            setName(data.usuario.nome || "");
+            setEmail(data.usuario.email || "");
           }
         }
       } catch (err) {
@@ -48,7 +49,6 @@ export default function EditProfileCard() {
     loadUserData();
   }, []);
 
-  // Função para o Preview instantâneo da imagem
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -56,7 +56,6 @@ export default function EditProfileCard() {
         alert("Imagem muito grande! Máximo 2MB.");
         return;
       }
-      // Gera uma URL temporária apenas para visualização no navegador
       setFotoPerfilUrl(URL.createObjectURL(file));
     }
   };
@@ -64,40 +63,57 @@ export default function EditProfileCard() {
   const handleSalvarAlteracoes = async (e) => {
     e.preventDefault();
 
+    if (!idPerfil) {
+      alert("Erro: ID do perfil não encontrado. Tente atualizar a página.");
+      return;
+    }
+
     try {
-      // Como o Back-end agora usa Multer, usamos FormData
       const formData = new FormData();
       formData.append("id", idPerfil);
       formData.append("idUsuario", idUsuario);
       formData.append("preferencias", description);
 
-      // Pegamos o arquivo físico do input
       const fileInput = document.getElementById("photo-upload");
-      if (fileInput.files[0]) {
-        // A chave 'file' deve ser a mesma do upload.single("file") nas rotas
+      if (fileInput && fileInput.files[0]) {
         formData.append("file", fileInput.files[0]);
       }
 
-      await apiLocal.put("/AlterarPerfil", formData, {
+      // CORREÇÃO: Capturando a resposta corretamente
+      const response = await apiLocal.put("/AlterarPerfil", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      alert("Perfil atualizado com sucesso!");
+      if (response.data) {
+        alert("Perfil atualizado com sucesso!");
+
+        // Avisa o Header para atualizar a foto
+        window.dispatchEvent(new Event("profileUpdate"));
+
+        if (response.data.foto_url) {
+          const timestamp = new Date().getTime();
+          setFotoPerfilUrl(
+            `http://localhost:3333/files/${response.data.foto_url}?t=${timestamp}`,
+          );
+        }
+      }
     } catch (err) {
-      console.error("Erro ao salvar perfil:", err);
-      alert("Erro ao salvar alterações. Verifique o console.");
+      console.error(
+        "Erro ao salvar perfil:",
+        err.response?.data || err.message,
+      );
+      alert("Erro ao salvar alterações.");
     }
   };
 
   return (
     <div className="bg-[#222222] rounded-lg p-4 mb-8 font-['Fira_Sans',sans-serif]">
-      {/* Seção da Foto */}
       <div className="grid grid-cols-1 sm:grid-cols-12 gap-x-3">
         <div className="relative col-span-2 mx-auto md:mx-0 pl-0 p-2">
           <img
-            className="w-28 h-28 sm:w-full sm:h-full object-cover rounded-lg border border-white/10"
+            className="w-28 h-28 sm:w-32 sm:h-32 object-cover rounded-lg border border-white/10"
             src={fotoPerfilUrl}
             alt="Profile Photo"
           />
@@ -122,24 +138,18 @@ export default function EditProfileCard() {
             <button
               type="button"
               onClick={() => {
-                setFotoPerfilUrl("/images/profile-picture.webp");
+                setFotoPerfilUrl(FOTO_PADRAO);
                 document.getElementById("photo-upload").value = "";
               }}
-              className={`bg-[#FF4D4A] text-xs font-bold text-white py-2 px-4 rounded-lg transition-colors ${fotoPerfilUrl.includes("profile-picture.webp") ? "cursor-not-allowed opacity-60" : "hover:bg-red-600"}`}
-              disabled={fotoPerfilUrl.includes("profile-picture.webp")}
+              className={`bg-[#FF4D4A] text-xs font-bold text-white py-2 px-4 rounded-lg transition-colors ${fotoPerfilUrl === FOTO_PADRAO ? "cursor-not-allowed opacity-60" : "hover:bg-red-600"}`}
+              disabled={fotoPerfilUrl === FOTO_PADRAO}
             >
-              DELETE PHOTO
+              RESET PHOTO
             </button>
-          </div>
-          <div className="flex justify-center sm:justify-normal mt-2">
-            <p className="text-gray-400 text-[10px] uppercase tracking-wider">
-              Allowed JPG or PNG. Max size of 2MB
-            </p>
           </div>
         </div>
       </div>
 
-      {/* Formulário */}
       <form className="mt-6 space-y-4" onSubmit={handleSalvarAlteracoes}>
         <div className="relative">
           <User className="absolute size-4 left-4 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -168,7 +178,7 @@ export default function EditProfileCard() {
           <textarea
             rows="4"
             className="w-full p-4 bg-[#16151D] text-white placeholder-gray-500 border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#913FE2] transition-all text-sm resize-none"
-            placeholder="Enter Description"
+            placeholder="Enter your bio or preferences..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />

@@ -1,12 +1,52 @@
 import React, { useState } from "react";
 import { Mail, Lock, Eye, EyeOff, X } from "lucide-react"; // Adicionado o ícone Eye aqui
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import apiLocal from "@/api/apiLocal";
 
 export default function Login() {
   //Modal = Esqueceu a senha
   //ShowPasowrd = Olho para ver a senha no Passoword
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // Novo estado para o olho
+
+  const [email, setEmail] = useState("")
+  const [senha, setSenha] = useState("")
+
+  const navigate = useNavigate(); // Inicializa o redirecionador
+
+  async function LogarBackEnd(e) {
+    // Importante para não recarregar a página
+    //console.log("Tentando logar com:", email, senha); // Debug inicial
+    e.preventDefault();
+    try {
+      const resposta = await apiLocal.post("/LoginUsuario", { email, senha });
+
+      // 1. Extrai os dados da resposta
+      const { token, nome, id } = resposta.data;
+
+      // 2. Salva no localStorage (para persistência)
+      localStorage.setItem("@readtoon:token", token);
+      localStorage.setItem("@readtoon:user", JSON.stringify({ nome, id }));
+
+      // 3. Configura o Axios para enviar o token automaticamente em todas as próximas chamadas
+      apiLocal.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+      console.log("Login realizado com sucesso!");
+
+      // REDIRECIONAMENTO AQUI
+      // Como sua rota "/" em Authenticated leva para Home, mandamos para lá
+      navigate("/");
+
+      // Opcional: Recarregar a página para garantir que o Router identifique o novo estado
+      window.location.reload();
+
+
+    } catch (err) {
+      console.error("Erro ao logar:", err);
+      alert("Email ou senha incorretos.");
+    }
+  }
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a] p-4 font-sans relative">
@@ -30,12 +70,15 @@ export default function Login() {
           <p className="text-gray-400 text-sm mt-1">Log in to your account</p>
         </div>
 
-        <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+        <form className="space-y-5" onSubmit={LogarBackEnd}>
           <div className="relative group">
             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-gray-500 group-focus-within:text-purple-500 transition-colors" />
             <input
               type="email"
               placeholder="Enter your Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="username"
               className="w-full bg-[#121212] text-white border border-gray-800 rounded-xl p-4 pl-10 focus:outline-none focus:ring-2 focus:ring-purple-600/50 focus:border-purple-600 transition-all placeholder:text-gray-600"
             />
           </div>
@@ -45,6 +88,9 @@ export default function Login() {
             <input
               type={showPassword ? "text" : "password"} // Alterado para usar o estado
               placeholder="Password"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              autoComplete="current-password"
               className="w-full bg-[#121212] text-white border border-gray-800 rounded-xl p-4 pl-10 focus:outline-none focus:ring-2 focus:ring-purple-600/50 focus:border-purple-600 transition-all placeholder:text-gray-600"
             />
             {/* Botão do Olho Atualizado */}
