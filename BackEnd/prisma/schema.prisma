@@ -16,7 +16,7 @@ datasource db {
 model Usuario {
   id    String @id @default(uuid())
   nome  String
-  email String
+  email String //usar @unique nos proximos progetos
   senha String
 
   // Relacionamento: Um usuário TEM um perfil

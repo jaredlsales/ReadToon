@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // Adicionado o { useState } aqui
 import EditProfileCard from '@/components/EditProfileCard/EditProfileCard';
-import ChangePasswordCard from '@/components/ChangePasswordCard/ChangePassowrdCard';
+import ChangePasswordCard from '@/components/ChangePasswordCard/ChangePasswordCard';
 
 export default function Profile() {
   // Estado para controlar qual aba está ativa

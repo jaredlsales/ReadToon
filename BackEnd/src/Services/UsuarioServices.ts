@@ -1,4 +1,3 @@
-import { warnEnvConflicts } from "@prisma/client/runtime/library";
 import prismaClient from "../Prisma/PrismaClient";
 import { compare, hash } from "bcryptjs"
 import { sign } from "jsonwebtoken";
@@ -37,6 +36,17 @@ interface AtualizarSenha {
 
 class UsuarioServices {
     async cadastrarUsuario({ nome, email, senha }: CadastrarUsuario) {
+        // Validar email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            throw new Error("Invalid email address");
+        }
+
+        // Validar senha forte
+        const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        if (!senhaRegex.test(senha)) {
+            throw new Error("The password must be at least 8 characters long, with one uppercase letter, one lowercase letter, and one number.");
+        }
         //emailExiste = faz uma consunta no bando de dados se já existe na base de dados
         //OR = Não dizer qual está cadastrado e uma boa pratica
         const emailExiste = await prismaClient.usuario.findFirst({
@@ -45,15 +55,13 @@ class UsuarioServices {
                     {
                         email: email
                     },
-                    {
-                        senha: senha
-                    }
+
                 ]
             }
         })
 
         if (emailExiste) {
-            throw new Error("Email ou Senha já está cadastrado")
+            throw new Error("Email is already registered!")
         }
 
         //senhaCrypte =  Seria a Cryptografia do senha com uma hash
@@ -63,13 +71,13 @@ class UsuarioServices {
         await prismaClient.usuario.create({
 
             data: {
-                nome: nome,
-                email: email,
+                nome,
+                email,
                 senha: senhaCrypte
             }
         })
 
-        return ({ dados: "Cadastro Efetuado com Sucesso" })
+        return ({ dados: "Registration Successful" })
     }
 
     async LoginUsuario({ email, senha }: LoginUsuario) {
@@ -80,13 +88,13 @@ class UsuarioServices {
         })
 
         if (!emailExiste) {
-            throw new Error("Login Incorreto")
+            throw new Error("Incorrect Login")
         }
 
         const senhaCrypte = await compare(senha, emailExiste.senha)
         //console.log(senhaCrypte)
         if (!senhaCrypte) {
-            throw new Error("Email ou senha Incorreto")
+            throw new Error("Incorrect email or password")
 
         }
 
@@ -139,7 +147,7 @@ class UsuarioServices {
 
         })
 
-        return ({ dados: "Usuario Alterado com Sucesso" })
+        return ({ dados: "User Changed Successfully" })
     }
 
     async alterarSenha({ usuario_id, senhaAntiga, novaSenha }: AtualizarSenha) {
@@ -148,13 +156,13 @@ class UsuarioServices {
         });
 
         if (!usuario) {
-            throw new Error("Usuário não encontrado");
+            throw new Error("User not found");
         }
 
         // Compara a senha antiga com a do banco
         const senhaBate = await compare(senhaAntiga, usuario.senha);
         if (!senhaBate) {
-            throw new Error("Senha atual incorreta");
+            throw new Error("Current password incorrect");
         }
 
         // Gera o novo hash
@@ -165,7 +173,7 @@ class UsuarioServices {
             data: { senha: novaSenhaHash }
         });
 
-        return { dados: "Senha alterada com sucesso!" };
+        return { dados: "Password changed successfully!" };
     }
 
     async DeletarUsuario({ id }: DeletarUsuario) {
@@ -176,7 +184,7 @@ class UsuarioServices {
 
         })
 
-        return ({ dados: "Usuario Deletado com Sucesso!" })
+        return ({ dados: "User successfully deleted!" })
     }
 
 }
