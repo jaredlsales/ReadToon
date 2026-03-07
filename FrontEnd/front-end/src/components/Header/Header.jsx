@@ -1,49 +1,87 @@
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import apiLocal from "@/api/apiLocal";
 
 export default function Header() {
+  const [busca, setBusca] = useState("");
+  const [resultados, setResultados] = useState([]);
+  const [todasObras, setTodasObras] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function carregarObras() {
+      try {
+        const response = await apiLocal.get("/VisualizarManhwa");
+        setTodasObras(response.data);
+      } catch (err) {
+        console.error("Erro ao carregar obras para busca", err);
+      }
+    }
+    carregarObras();
+  }, []);
+
+  useEffect(() => {
+    if (busca.trim() === "") {
+      setResultados([]);
+      return;
+    }
+
+    const filtrados = todasObras.filter((obra) =>
+      obra.titulo.toLowerCase().includes(busca.toLowerCase()),
+    );
+    setResultados(filtrados.slice(0, 5));
+  }, [busca, todasObras]);
+
+  const getManhwaPath = (titulo) => {
+    const slug = titulo.toLowerCase().replace(/\s+/g, "-");
+    const rotas = {
+      "Nano Machine": `/Manhwa/NanoMachine/${slug}`,
+      "Infinite Mage": `/Manhwa/InfiniteMage/${slug}`,
+      "Star-Embracing Swordmaster": `/Manhwa/StarEmbracingSwordmaster/${slug}`,
+      "Revenge of the Iron-Blooded Sword Hound": `/Manhwa/RevengeOfTheIron/${slug}`,
+      "The Regressed Mercenary's Machinations": `/Manhwa/TheRegressedMercenary/${slug}`,
+    };
+    return rotas[titulo] || `/Manhwa/${slug}`;
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && resultados.length > 0) {
+      const destino = getManhwaPath(resultados[0].titulo);
+      navigate(destino);
+      setBusca("");
+      setResultados([]);
+    }
+  };
+
   return (
     <header className="bg-[#913FE2] w-full shadow-md font-['Fira_Sans',sans-serif] sticky top-0 z-50">
-      {/* Container principal com padding responsivo */}
       <div className="max-w-[1220px] mx-auto px-4 flex items-center justify-between h-14 gap-2">
-        {/* Lado Esquerdo: Logo e Menu */}
         <div className="flex items-center gap-4 shrink-0">
-          {/* Link da Logo */}
           <Link
-            to="/" // MUDANÇA AQUI: troque 'href' por 'to'
-            className="flex h-12 w-12 shrink-0 items-center justify-center" // Aumentei para h-12 para a logo não ficar esmagada
+            to="/"
+            className="flex h-12 w-12 shrink-0 items-center justify-center"
           >
-            {/* O segredo do círculo perfeito continua aqui */}
-            <div className="h-full w-full rounded-full border-2 border-black/40 overflow-hidden bg-black shadow-lg flex items-center justify-center">
+            <div className="h-full w-full rounded-full border-2 border-black/40 overflow-hidden bg-black shadow-lg flex items-center justify-center transition-transform hover:scale-105">
               <img
                 className="h-full w-full object-cover scale-[2.5]"
-                src="src/assets/logo.png"
+                src="/src/assets/logo.png"
                 alt="ReadToon Logo"
               />
             </div>
           </Link>
-
-          {/*<nav className="hidden lg:block">
-            <ul className="flex flex-row items-center">
-              <li>
-                <a
-                  href="/"
-                  className="px-3 text-white text-[15px] font-bold tracking-wider hover:bg-black/10 py-5 transition-colors"
-                >
-                  Home
-                </a>
-              </li>
-            </ul>
-          </nav>*/}
         </div>
 
-        {/* Lado Direito: Busca e Login */}
         <div className="flex items-center gap-2 sm:gap-4 flex-1 justify-end min-w-0">
-          {/* Busca: Escondida em telas menores que 'md' (768px) para evitar a quebra que você viu */}
           <div className="hidden md:flex items-center relative w-full max-w-[300px]">
             <input
               type="text"
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+              onKeyDown={handleKeyDown}
+              // Fecha a busca se o usuário clicar fora (com delay para permitir o clique no link)
+              onBlur={() => setTimeout(() => setResultados([]), 200)}
               className="w-full text-white pl-4 pr-10 py-1.5 rounded-lg border border-black/20 bg-[#16151D] outline-none focus:border-white/40 transition-all text-sm"
-              placeholder="Search"
+              placeholder="Search manhwa..."
             />
             <svg
               className="h-4 w-4 absolute right-3 text-white/40"
@@ -56,30 +94,42 @@ export default function Header() {
                 clipRule="evenodd"
               />
             </svg>
+
+            {/* DROPDOWN - Adicionado z-[100] e pointer-events-auto */}
+            {resultados.length > 0 && (
+              <div className="absolute top-[110%] left-0 w-full bg-[#1A1A1A] border border-white/10 rounded-lg shadow-2xl overflow-hidden z-[100]">
+                {resultados.map((obra) => (
+                  <Link
+                    key={obra.id}
+                    to={getManhwaPath(obra.titulo)}
+                    onClick={() => {
+                      setBusca("");
+                      setResultados([]);
+                    }}
+                    className="flex items-center gap-3 p-2 hover:bg-purple-600 transition-colors border-b border-white/5 last:border-0 group"
+                  >
+                    <img
+                      src={`http://localhost:3333/files/${encodeURI(obra.capa_url)}`}
+                      className="w-9 h-12 object-cover rounded shadow-sm"
+                      alt={obra.titulo}
+                    />
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-xs font-bold text-white truncate group-hover:text-white">
+                        {obra.titulo}
+                      </span>
+                      <span className="text-[10px] text-gray-400">
+                        {obra.genero || "Manhwa"}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
 
-          {/* Ícone de Busca para Mobile (Só aparece quando a barra grande some) */}
-          <button className="md:hidden p-2 text-white hover:bg-black/10 rounded-full">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.3-4.3"></path>
-            </svg>
-          </button>
-
-          {/* Botão Login: Ajusta o tamanho conforme a tela */}
           <div className="shrink-0">
             <Link to="/Login">
-              <button className="flex items-center gap-2 bg-[#6F2598] hover:bg-[#5a1f78] text-white px-3 sm:px-4 py-2 rounded-md transition-all h-9 shadow-sm">
+              <button className="flex items-center gap-2 bg-[#6F2598] hover:bg-[#5a1f78] text-white px-3 sm:px-4 py-2 rounded-md transition-all h-9 shadow-sm active:scale-95">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="14"
