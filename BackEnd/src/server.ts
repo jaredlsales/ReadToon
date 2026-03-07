@@ -1,3 +1,7 @@
+//dotenv e usando depois quando o projeto vai ser publicado, isso fará com que as variáveis do arquivo .env sejam carregadas.
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express, {Request, Response, NextFunction} from "express"
 import "express-async-errors"
 import cors from "cors"
@@ -7,7 +11,10 @@ import { error } from "console"
 
 const app = express()
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true
+}));
 app.use(routes)
 
 
