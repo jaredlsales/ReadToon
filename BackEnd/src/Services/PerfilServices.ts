@@ -6,11 +6,12 @@ interface Perfil {
     idUsuario: string
 }
 
+//Alterecao realizado pra mudar de foto no Perfil
 interface AlterarPerfil {
-    id: string,
-    foto_url: string,
-    preferencias: string,
-    idUsuario: string
+    id: string;
+    foto_url?: string; // O '?' torna o campo opcional (aceita string ou undefined)
+    preferencias: string;
+    idUsuario: string;
 }
 
 interface DeletarPerfil {
@@ -48,6 +49,7 @@ class PerfilServices {
         
     }
 
+    //Alterecao realizado pra mudar de foto no Perfil
     async AlterarPerfil({id, idUsuario, foto_url, preferencias}: AlterarPerfil){
         await prismaClient.perfil.update({
             where:{
@@ -55,7 +57,8 @@ class PerfilServices {
             },
             data:{
                 idUsuario:idUsuario,
-                foto_url:foto_url,
+                // Lógica inteligente: Só adiciona foto_url ao objeto 'data' se ela existir
+                ...(foto_url && { foto_url: foto_url }),
                 preferencias:preferencias
                 
             }

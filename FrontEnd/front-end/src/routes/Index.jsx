@@ -4,7 +4,8 @@ import NotAuthenticated from "./NotAuthenticated";
 
 export default function Rotas(){
 
-    const autenticado =  false
+    const autenticado =  true
+
 
     //Se a condição verdadeira vai aparecer Autenti.. ou vai se for false vai aparecer NotAuthenti..
     return(
