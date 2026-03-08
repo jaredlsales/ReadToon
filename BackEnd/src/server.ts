@@ -2,7 +2,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import express, {Request, Response, NextFunction} from "express"
+import express, { Request, Response, NextFunction } from "express"
 import "express-async-errors"
 import cors from "cors"
 import path from "path"
@@ -12,8 +12,8 @@ import { error } from "console"
 const app = express()
 app.use(express.json())
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    credentials: true
 }));
 app.use(routes)
 
@@ -21,8 +21,8 @@ app.use(routes)
 // Melhorando a saida do Erro (deixando mais humanizado)
 // Erro de requisição 400 do metodo HTTP (Bad Request)
 
-app.use((err:Error, req:Request, res:Response, next:NextFunction ) => {
-    if (err instanceof Error){
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    if (err instanceof Error) {
         return res.status(400).json({
             error: err.message
         })
