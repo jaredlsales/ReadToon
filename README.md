@@ -111,26 +111,32 @@ npm run dev
 
 ### 📂 Project Structure
 
+The project follows a monorepo architecture organized as follows:
+
+```text
 ReadToon/
-├── BackEnd/                 # Node.js API
-│   ├── prisma/              # Database schema and migrations
-│   ├── src/
-│   │   ├── controllers/     # Route handlers
-│   │   ├── middlewares/     # Auth, error handling
-│   │   ├── routes/          # API endpoints
-│   │   └── server.ts        # App entry point
-│   ├── tmp/                 # Uploaded images (covers, pages)
-│   └── .env                 # Environment variables
-├── FrontEnd/
-│   └── front-end/           # React application
-│       ├── public/          # Static assets
-│       ├── src/
-│       │   ├── components/  # Reusable UI components
-│       │   ├── pages/       # Application pages
-│       │   ├── services/    # API calls (Axios)
-│       │   └── App.tsx
-│       └── .env             # Frontend environment
-└── README.md
+├── 📁 BackEnd/                  # REST API (Node.js + TypeScript)
+│   ├── 📁 prisma/               # Database schema and migrations
+│   ├── 📁 src/
+│   │   ├── 📁 controllers/      # Route logic handlers
+│   │   ├── 📁 middlewares/      # Auth filters and error handling
+│   │   ├── 📁 routes/           # API endpoint definitions
+│   │   └── 📄 server.ts         # Express server entry point
+│   ├── 📁 tmp/                  # Local storage for covers and pages (Multer)
+│   └── 📄 .env                  # Server credentials and secrets
+│
+├── 📁 FrontEnd/
+│   └── 📁 front-end/            # User Interface (React + Vite)
+│       ├── 📁 public/           # Static assets and icons
+│       ├── 📁 src/
+│       │   ├── 📁 components/   # Reusable UI components (Shadcn/UI)
+│       │   ├── 📁 pages/        # Main application screens
+│       │   ├── 📁 services/     # API integration (Axios instances)
+│       │   └── 📄 App.tsx       # Root component and routing
+│       └── 📄 .env              # Frontend environment variables
+│
+└── 📄 README.md                 # Main documentation
+```
 
 ### 📝 Key Features
 * **✅ Manhwa Ecosystem:** Full management for titles, chapters, and image sequencing.
@@ -142,4 +148,4 @@ ReadToon/
 * **✅ Global Error Handling:** Middleware-driven responses for a cleaner dev experience.
 
 ### 👨‍💻 Author
-# Developed by Jared Sales.
+Developed by Jared Sales.
