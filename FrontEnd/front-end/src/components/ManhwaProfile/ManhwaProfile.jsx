@@ -1,5 +1,6 @@
 import React from "react";
 import { Bookmark, Star } from "lucide-react";
+import config from "../../config/config";
 
 const ManhwaProfile = ({ manhwa }) => {
   // Se o pai ainda não passou os dados, não mostramos o erro, apenas um estado de espera
@@ -17,7 +18,7 @@ const ManhwaProfile = ({ manhwa }) => {
         <img
           alt={manhwa.titulo}
           className="rounded mx-auto md:mx-0 w-[200px] h-[300px] object-cover shadow-2xl border border-zinc-800"
-          src={`http://localhost:3333/files/${manhwa.capa_url}`}
+          src={config.getImageUrl(manhwa.capa_url)}
         />
 
         <div className="space-y-1.5">

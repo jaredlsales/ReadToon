@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import apiLocal from "../../api/apiLocal";
+import config from "../../config/config";
 
 const HeroCarousel = () => {
   const [manhwas, setManhwas] = useState([]);
@@ -51,7 +52,7 @@ const HeroCarousel = () => {
   if (manhwas.length === 0) return null;
 
   const current = manhwas[currentIndex];
-  const fullImageUrl = `http://localhost:3333/files/${encodeURI(current.capa_url)}`;
+  const fullImageUrl = config.getImageUrl(current.capa_url);
 
   return (
     <div className="relative overflow-hidden rounded-[3px] border border-[#312f40] bg-[#222] text-white shadow-xl min-h-[250px] sm:h-[300px]">
@@ -116,7 +117,9 @@ const HeroCarousel = () => {
             key={index}
             onClick={() => setCurrentIndex(index)}
             className={`h-1 rounded-full transition-all ${
-              index === currentIndex ? "w-5 sm:w-6 bg-[#913fe2]" : "w-1.5 sm:w-2 bg-[#444]"
+              index === currentIndex
+                ? "w-5 sm:w-6 bg-[#913fe2]"
+                : "w-1.5 sm:w-2 bg-[#444]"
             }`}
           />
         ))}

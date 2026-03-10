@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiLocal from "@/api/apiLocal";
+import config from "@/config/config";
 import Readtoon from "../../../public/Readtoon.png";
 
 export default function Header() {
@@ -110,7 +111,7 @@ export default function Header() {
                     className="flex items-center gap-3 p-2 hover:bg-purple-600 transition-colors border-b border-white/5 last:border-0 group"
                   >
                     <img
-                      src={`http://localhost:3333/files/${encodeURI(obra.capa_url)}`}
+                      src={config.getImageUrl(obra.capa_url)}
                       className="w-9 h-12 object-cover rounded shadow-sm"
                       alt={obra.titulo}
                     />

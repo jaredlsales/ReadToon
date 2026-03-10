@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import apiLocal from "@/api/apiLocal";
+import config from "@/config/config";
 import { Timer, CircleX, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -87,7 +88,7 @@ export default function LatestUpdates() {
               {/* Capa com Link para a página da obra */}
               <Link to={manhwaRoute}>
                 <img
-                  src={`http://localhost:3333/files/${encodeURI(m.capa_url)}`}
+                  src={config.getImageUrl(m.capa_url)}
                   className="w-24 h-32 object-cover rounded shadow-md transition-transform group-hover:scale-105"
                   alt={m.titulo}
                 />

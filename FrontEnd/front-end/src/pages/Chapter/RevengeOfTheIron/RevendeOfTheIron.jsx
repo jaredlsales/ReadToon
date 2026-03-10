@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import TopBar from "@/components/TopBar/TopBar";
 import NavBarChapter from "@/components/NavBarChapter/NavBarChapter";
 import apiLocal from "@/api/apiLocal";
+import config from "@/config/config";
 
 export default function RevendeOfTheIronChapter() {
-
   const { slug, chapterNumber } = useParams();
   const [manhwa, setManhwa] = useState(null);
   const [capitulos, setCapitulos] = useState([]);
@@ -47,7 +47,7 @@ export default function RevendeOfTheIronChapter() {
   }, [chapterNumber]); // Adicione chapterNumber aqui para recarregar ao mudar de página
 
   return (
-     <div className="min-h-screen bg-[#111] text-white">
+    <div className="min-h-screen bg-[#111] text-white">
       <main className="max-w-[1220px] mx-auto pt-6 px-4 pb-20">
         <div className="space-y-6">
           <TopBar
@@ -67,7 +67,7 @@ export default function RevendeOfTheIronChapter() {
                 <img
                   key={index}
                   // O trim() remove espaços nas pontas e o encodeURI trata os espaços internos
-                  src={`http://localhost:3333/files/${encodeURI(imgName.trim())}`}
+                  src={config.getImageUrl(imgName.trim())}
                   alt="página do capítulo"
                   className="w-full max-w-[800px] h-auto"
                   onError={(e) => {

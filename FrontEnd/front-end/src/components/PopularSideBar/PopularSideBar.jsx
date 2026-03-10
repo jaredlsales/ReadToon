@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import apiLocal from '../../api/apiLocal'; // Certifique-se que o caminho está correto
-import PopularCard from '../PopularCard/PopularCard';
+import React, { useEffect, useState } from "react";
+import apiLocal from "../../api/apiLocal"; // Certifique-se que o caminho está correto
+import config from "../../config/config";
+import PopularCard from "../PopularCard/PopularCard";
 //ESTRUTURA PARA O FUTURO (ABAS DINÂMICAS) import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const PopularSideBar = () => {
@@ -27,20 +28,22 @@ const PopularSideBar = () => {
       <div className="bg-[#222] border-b border-[#312f40] px-[15px] py-[8px]">
         <h3 className="text-[15px] text-white font-semibold">Popular</h3>
       </div>
-      
+
       {/* Lista de Obras (Versão Atual) */}
       <div className="flex flex-col">
         {loading ? (
-          <div className="p-4 text-center text-gray-400 text-sm italic">Carregando obras...</div>
+          <div className="p-4 text-center text-gray-400 text-sm italic">
+            Carregando obras...
+          </div>
         ) : (
           manhwas.map((manhwa, index) => (
-            <PopularCard 
+            <PopularCard
               key={manhwa.id}
               rank={index + 1}
               title={manhwa.titulo}
-              image={`http://localhost:3333/files/${manhwa.capa_url}`}
-              genres={manhwa.genero ? manhwa.genero.split(',') : []} 
-              rating="9.0" 
+              image={config.getImageUrl(manhwa.capa_url)}
+              genres={manhwa.genero ? manhwa.genero.split(",") : []}
+              rating="9.0"
             />
           ))
         )}
@@ -66,12 +69,12 @@ const PopularSideBar = () => {
 
             <TabsContent value="weekly" className="mt-2 outline-none">
               {manhwas.map((manhwa, index) => (
-                <PopularCard 
+                <PopularCard
                   key={manhwa.id}
                   rank={index + 1}
                   title={manhwa.titulo}
-                  image={`http://localhost:3333/files/${manhwa.capa_url}`}
-                  genres={manhwa.genero ? manhwa.genero.split(',') : []} 
+                  image={config.getImageUrl(manhwa.capa_url)}
+                  genres={manhwa.genero ? manhwa.genero.split(',') : []}
                   rating="9.0"
                 />
               ))}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { User, Mail } from "lucide-react";
 import apiLocal from "@/api/apiLocal";
+import config from "@/config/config";
 
 export default function EditProfileCard() {
   const [name, setName] = useState("");
@@ -32,7 +33,7 @@ export default function EditProfileCard() {
           setDescription(data.preferencias || "");
 
           if (data.foto_url) {
-            setFotoPerfilUrl(`http://localhost:3333/files/${data.foto_url}`);
+            setFotoPerfilUrl(config.getImageUrl(data.foto_url));
           } else {
             setFotoPerfilUrl(FOTO_PADRAO);
           }
@@ -95,7 +96,7 @@ export default function EditProfileCard() {
         if (response.data.foto_url) {
           const timestamp = new Date().getTime();
           setFotoPerfilUrl(
-            `http://localhost:3333/files/${response.data.foto_url}?t=${timestamp}`,
+            `${config.IMAGES_BASE_URL}/${response.data.foto_url}?t=${timestamp}`,
           );
         }
       }

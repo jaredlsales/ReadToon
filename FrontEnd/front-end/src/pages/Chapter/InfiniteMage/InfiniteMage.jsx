@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import TopBar from "@/components/TopBar/TopBar";
 import NavBarChapter from "@/components/NavBarChapter/NavBarChapter";
 import apiLocal from "@/api/apiLocal";
+import config from "@/config/config";
 
 export default function InfiniteMageChapter() {
-
   const { slug, chapterNumber } = useParams();
   const [manhwa, setManhwa] = useState(null);
   const [capitulos, setCapitulos] = useState([]);
@@ -67,7 +67,7 @@ export default function InfiniteMageChapter() {
                 <img
                   key={index}
                   // O trim() remove espaços nas pontas e o encodeURI trata os espaços internos
-                  src={`http://localhost:3333/files/${encodeURI(imgName.trim())}`}
+                  src={config.getImageUrl(imgName.trim())}
                   alt="página do capítulo"
                   className="w-full max-w-[800px] h-auto"
                   onError={(e) => {

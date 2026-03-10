@@ -1,7 +1,8 @@
 import axios from "axios";
+import config from "../config/config.js";
 
 const apiLocal = axios.create({
-    baseURL: 'https://api-readtoon.devjaredsales.com'
+    baseURL: config.API_BASE_URL
 });
 
 export default apiLocal;
